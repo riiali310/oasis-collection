@@ -1,0 +1,732 @@
+{
+  "meta": {
+    "username": "freeal",
+    "updated": "2026-06-06 18:45",
+    "total": 71
+  },
+  "owned": [
+    {
+      "id": 908657,
+      "master_id": 908657,
+      "title": "Fuckin' In The Bushes",
+      "year": 2000,
+      "format": "12\"",
+      "label": "Big Brother",
+      "catalog": "FITB 001",
+      "thumb": "https://i.discogs.com/gmBF83ehndukxefa_YgGWz5jPzMpPKO8aK-Ud3Cfw9Q/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTkwODY1/Ny0xMjc3NDU3MDM5/LmpwZWc.jpeg",
+      "special": "PROMO"
+    },
+    {
+      "id": 1806536,
+      "master_id": 52275,
+      "title": "Go Let It Out",
+      "year": 2000,
+      "format": "7\"",
+      "label": "Big Brother",
+      "catalog": "RKID 001",
+      "thumb": "https://i.discogs.com/KpGrQCemrdAQlPR0UNKtTLxDprRoSW2BsyQXr2U2plY/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE4MDY1/MzYtMTQ2OTk4Mjc5/NC05MDQxLmpwZWc.jpeg"
+    },
+    {
+      "id": 1021431,
+      "master_id": 52275,
+      "title": "Go Let It Out",
+      "year": 2000,
+      "format": "12\"",
+      "label": "Big Brother",
+      "catalog": "RKID 001T",
+      "thumb": "https://i.discogs.com/ZS_AAiPKLHYTiyOYpoeN63vzmyYOnAiNeTdgRRNJAMA/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEwMjE0/MzEtMTQ1MTc3Mzgy/OC04NTUzLmpwZWc.jpeg"
+    },
+    {
+      "id": 817735,
+      "master_id": 52322,
+      "title": "Sunday Morning Call",
+      "year": 2000,
+      "format": "7\"",
+      "label": "Big Brother",
+      "catalog": "RKID 004",
+      "thumb": "https://i.discogs.com/T0k6JtWR1czEl51J7PWy54n1BQrk3geI2JbqRURNQss/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTgxNzcz/NS0xMjkzNDc4ODY1/LmpwZWc.jpeg"
+    },
+    {
+      "id": 1747119,
+      "master_id": 52316,
+      "title": "Stop Crying Your Heart Out",
+      "year": 2002,
+      "format": "7\"",
+      "label": "Big Brother",
+      "catalog": "RKID 24",
+      "thumb": "https://i.discogs.com/_OX6WNCB01g2WN5_jIGgLBk5QLF8drMqECmj5nP9lq0/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE3NDcx/MTktMTM5MzQwMDc1/MS0zNjE2LmpwZWc.jpeg"
+    },
+    {
+      "id": 2258058,
+      "master_id": 52316,
+      "title": "Stop Crying Your Heart Out",
+      "year": 2002,
+      "format": "12\"",
+      "label": "Big Brother",
+      "catalog": "RKID 24T",
+      "thumb": "https://i.discogs.com/BKoG9laDQ0dF3dEMsCcaRbXjwEeiETA1GaAB6Ap3j-4/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTIyNTgw/NTgtMTI3NzQ2NDI4/NC5qcGVn.jpeg"
+    },
+    {
+      "id": 1651244,
+      "master_id": 52286,
+      "title": "Little By Little / She Is Love",
+      "year": 2002,
+      "format": "7\"",
+      "label": "Big Brother",
+      "catalog": "RKID 26",
+      "thumb": "https://i.discogs.com/AxQS1sXDRPVLpoq8DFB3GXAjSJMajPhdyDdhWljM5p8/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE2NTEy/NDQtMTI5MzQ3ODYz/My5qcGVn.jpeg"
+    },
+    {
+      "id": 376544,
+      "master_id": 52286,
+      "title": "Little By Little / She Is Love",
+      "year": 2002,
+      "format": "12\"",
+      "label": "Big Brother",
+      "catalog": "RKID 26T",
+      "thumb": "https://i.discogs.com/ajmLHFiaKIahxTowlMmjozVcXjt0b86CbfjGOUDeJds/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM3NjU0/NC0xMzMwNTk5MjE2/LmpwZWc.jpeg"
+    },
+    {
+      "id": 1868286,
+      "master_id": 52308,
+      "title": "Songbird",
+      "year": 2003,
+      "format": "7\"",
+      "label": "Big Brother",
+      "catalog": "RKID 27",
+      "thumb": "https://i.discogs.com/vhB4uioD7UcFxug4A2M2XdCqmsXxhu7p1VRxWd1sEFw/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE4Njgy/ODYtMTI5NjY0MDU2/OC5qcGVn.jpeg"
+    },
+    {
+      "id": 30367064,
+      "master_id": 52324,
+      "title": "Supersonic",
+      "year": 2024,
+      "format": "7\"",
+      "label": "Big Brother",
+      "catalog": "RKID010C",
+      "thumb": "https://i.discogs.com/kb95GGdVHBSkBaZvF1TeQkUH41r2XTmbWDb1ly2zGHU/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMwMzY3/MDY0LTE3MTI4MzU0/MDUtODI4Ni5qcGVn.jpeg",
+      "special": "NUM"
+    },
+    {
+      "id": 33195651,
+      "master_id": 52351,
+      "title": "Whatever",
+      "year": 2025,
+      "format": "7\"",
+      "label": "Big Brother",
+      "catalog": "RKID149C",
+      "thumb": "https://i.discogs.com/57Cz92BiXrpufbT2wpF3I2PejTZO5aFBdjMNDKusEfU/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMzMTk1/NjUxLTE3NDAwNTU1/MTgtMjY4MS5qcGVn.jpeg",
+      "special": "NUM"
+    },
+    {
+      "id": 35906692,
+      "master_id": 52224,
+      "title": "(What's The Story) Morning Glory? Singles",
+      "year": 2025,
+      "format": "7\"",
+      "label": "Big Brother",
+      "catalog": "RKID151BOX",
+      "thumb": "https://i.discogs.com/v4_3M7AaEv5xSxrHzMfX47EBGaDDsB3wNlj5XPZaq8E/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM1OTA2/NjkyLTE3NjU1NDcz/MzItNDQyMS5qcGVn.jpeg"
+    },
+    {
+      "id": 33797907,
+      "master_id": 52304,
+      "title": "Some Might Say",
+      "year": 2025,
+      "format": "7\"",
+      "label": "Big Brother",
+      "catalog": "RKID152C",
+      "thumb": "https://i.discogs.com/GpUQqb0TwSHVgv3l4Zb2uUphVKlQWFM47lAySXduBSk/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMzNzk3/OTA3LTE3NDYwNDE4/MzMtOTA2NS5qcGVn.jpeg",
+      "special": "NUM"
+    },
+    {
+      "id": 948358,
+      "master_id": 52291,
+      "title": "Lyla",
+      "year": 2005,
+      "format": "7\"",
+      "label": "Big Brother",
+      "catalog": "RKID29",
+      "thumb": "https://i.discogs.com/lOSPpvZtWMH__HoUILQp36fuQREpxqHYzFcxPheEtyY/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTk0ODM1/OC0xMzI2MTA1MzQ5/LmpwZWc.jpeg"
+    },
+    {
+      "id": 1609860,
+      "master_id": 52336,
+      "title": "The Importance Of Being Idle",
+      "year": 2005,
+      "format": "7\"",
+      "label": "Big Brother",
+      "catalog": "RKID31",
+      "thumb": "https://i.discogs.com/XZKikHlPBv-nlPSgpDOvgW1maoWMi56RRbN3RR3AtXI/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE2MDk4/NjAtMTI5Nzg1MDMw/NS5qcGVn.jpeg"
+    },
+    {
+      "id": 1580619,
+      "master_id": 52283,
+      "title": "Let There Be Love",
+      "year": 2005,
+      "format": "10\"",
+      "label": "Big Brother",
+      "catalog": "RKID32",
+      "thumb": "https://i.discogs.com/XV5HG1uRXw5Xg0mNFd6_K7c9EaF4SW8h8SyiQzvTR0U/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE1ODA2/MTktMTQ1MTc2NzE4/My04MTkyLmpwZWc.jpeg"
+    },
+    {
+      "id": 1479268,
+      "master_id": 52358,
+      "title": "The Shock Of The Lightning",
+      "year": 2008,
+      "format": "7\"",
+      "label": "Big Brother",
+      "catalog": "RKID52",
+      "thumb": "https://i.discogs.com/syK0TNOJaKCPtkm1Ha__9GPwubkVGv__sVWzhIKZoEI/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE0Nzky/NjgtMTIyMjc3MzU3/MC5qcGVn.jpeg"
+    },
+    {
+      "id": 1559033,
+      "master_id": 52278,
+      "title": "I'm Outta Time",
+      "year": 2008,
+      "format": "7\"",
+      "label": "Big Brother",
+      "catalog": "RKID55",
+      "thumb": "https://i.discogs.com/4vyj0YAfCYq-XIY4FfAzpmtTibWnRiRvhbqdTDZPFjo/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE1NTkw/MzMtMTIyODMzMTA3/OC5qcGVn.jpeg"
+    },
+    {
+      "id": 2731784,
+      "master_id": 52278,
+      "title": "I'm Outta Time",
+      "year": 2008,
+      "format": "12\"",
+      "label": "Big Brother",
+      "catalog": "RKID55TP",
+      "thumb": "https://i.discogs.com/JdVT3uDKYAmE6gaA20T9vhhhDBW-WdC-RiTiknkaYNk/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI3MzE3/ODQtMTI5ODU1MTk4/NC5qcGVn.jpeg",
+      "special": "PROMO"
+    },
+    {
+      "id": 1559050,
+      "master_id": 52278,
+      "title": "I'm Outta Time (Remixes)",
+      "year": 2008,
+      "format": "7\"",
+      "label": "Big Brother",
+      "catalog": "RKID55X",
+      "thumb": "https://i.discogs.com/9Dkx-v0xp9_gx9UFOOSxorXdjWoDASqLx_A3LAj7wxY/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE1NTkw/NTAtMTIyODMzMTY3/MC5qcGVn.jpeg"
+    },
+    {
+      "id": 1692777,
+      "master_id": 52270,
+      "title": "Falling Down",
+      "year": 2009,
+      "format": "7\"",
+      "label": "Big Brother",
+      "catalog": "RKID56",
+      "thumb": "https://i.discogs.com/j9qsZF0rKZtSbB42qzcmc02Yh9lYlEL7bUt3GKKFxxQ/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE2OTI3/NzctMTIzNzMxNTQ3/Ny5qcGVn.jpeg"
+    },
+    {
+      "id": 1677043,
+      "master_id": 52270,
+      "title": "Falling Down (A Monstrous Psychedelic Bubble Exploding In Your Mind)",
+      "year": 2009,
+      "format": "12\"",
+      "label": "Big Brother",
+      "catalog": "RKID56T",
+      "thumb": "https://i.discogs.com/7oc0jKBEeHMKr0dSQEIPMGH8X0L-zWd8qAX3XVJ3dY0/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE2Nzcw/NDMtMTYxMTQ4MzE2/Ny04ODM2LmpwZWc.jpeg"
+    },
+    {
+      "id": 5567207,
+      "master_id": 52324,
+      "title": "Supersonic",
+      "year": 2014,
+      "format": "12\"",
+      "label": "Big Brother",
+      "catalog": "RKID71T",
+      "thumb": "https://i.discogs.com/p5ebCaCUzP5voSFBl-kMAkYHbsoeGG48a6COiHK25bo/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTU1Njcy/MDctMTQwMDIzMTkw/Ny01MjMyLmpwZWc.jpeg",
+      "special": "RSD"
+    },
+    {
+      "id": 2920459,
+      "master_id": 52275,
+      "title": "Go Let It Out",
+      "year": 2000,
+      "format": "Cass",
+      "label": "Big Brother",
+      "catalog": "RKIDCS 001",
+      "thumb": "https://i.discogs.com/rFNIBrVRTAdjIyF4qvPPKAqLg0O7FqqJEjNeLaAtJjM/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI5MjA0/NTktMTMwNzM2NjU5/OC5qcGVn.jpeg"
+    },
+    {
+      "id": 33261639,
+      "master_id": 52313,
+      "title": "Standing On The Shoulder Of Giants",
+      "year": 2025,
+      "format": "LP",
+      "label": "Big Brother",
+      "catalog": "RKIDLP002CM",
+      "thumb": "https://i.discogs.com/SwYt1u4ZRnjAv3hkWBjF075hrwgGb0r68z5lwVFzIiI/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMzMjYx/NjM5LTE3NDA2NTYy/NDYtMTE3OS5qcGVn.jpeg",
+      "special": "LTD"
+    },
+    {
+      "id": 13105944,
+      "master_id": 52313,
+      "title": "Standing On The Shoulder Of Giants",
+      "year": 2018,
+      "format": "LP",
+      "label": "Big Brother",
+      "catalog": "RKIDLP002X",
+      "thumb": "https://i.discogs.com/Wy9vAocY14PROTZqtb04qpM-G5mWuF5XOUFClRfGBp8/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEzMTA1/OTQ0LTE1NDg1MDI4/MzktMjUxNi5qcGVn.jpeg"
+    },
+    {
+      "id": 20089180,
+      "master_id": 52344,
+      "title": "The Masterplan",
+      "year": 2009,
+      "format": "2xLP",
+      "label": "Big Brother",
+      "catalog": "RKIDLP009X",
+      "thumb": "https://i.discogs.com/tGpTfRs_aikTrrsVkmBkDUjrhSU2BX0pT5lD1cAq_F8/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTIwMDg5/MTgwLTE3NDU4NTgz/MjItNzQxOC5qcGVn.jpeg"
+    },
+    {
+      "id": 28788211,
+      "master_id": 52344,
+      "title": "The Masterplan",
+      "year": 2023,
+      "format": "2xLP",
+      "label": "Big Brother",
+      "catalog": "RKIDLP109CM",
+      "thumb": "https://i.discogs.com/v3nDoixZmbyVFFe5t2jZy5kiAtdFQWaxFqPcrfEKXlA/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI4Nzg4/MjExLTE2OTkwMTQw/MTUtODEwMS5qcGVn.jpeg"
+    },
+    {
+      "id": 31605607,
+      "master_id": 52255,
+      "title": "Definitely Maybe",
+      "year": 2024,
+      "format": "2xLP",
+      "label": "Big Brother",
+      "catalog": "RKIDLP125CA",
+      "thumb": "https://i.discogs.com/XVWfWfL5CThDaBUxqfIBbnTyEMJtf7sY0UsRVSAZoYU/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMxNjA1/NjA3LTE3MjUwMTk3/MDgtNTMxOC5qcGVn.jpeg",
+      "special": "LTD"
+    },
+    {
+      "id": 31592299,
+      "master_id": 52255,
+      "title": "Definitely Maybe",
+      "year": 2024,
+      "format": "2xLP",
+      "label": "Big Brother",
+      "catalog": "RKIDLP125X",
+      "thumb": "https://i.discogs.com/Wv3fNEyom7HYh5Awp-zptV_iOxr4IHTJ2_1yRhxNg8E/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMxNTky/Mjk5LTE3MjQ5Mzg2/OTItNDU5Ni5qcGVn.jpeg"
+    },
+    {
+      "id": 33663000,
+      "master_id": 254937,
+      "title": "Time Flies... 1994-2009",
+      "year": 2025,
+      "format": "LP",
+      "label": "Big Brother",
+      "catalog": "RKIDLP150RSD",
+      "thumb": "https://i.discogs.com/PZFt1xFleJE4HB9dyPmeNpt1YfDHZLQ4ZNNzv1hOYkw/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMzNjYz/MDAwLTE3NDQzNTEx/ODEtNDk1MC5qcGVn.jpeg"
+    },
+    {
+      "id": 35259460,
+      "master_id": 52220,
+      "title": "(What's The Story) Morning Glory?",
+      "year": 2025,
+      "format": "2xLP",
+      "label": "Big Brother",
+      "catalog": "RKIDLP151C",
+      "thumb": "https://i.discogs.com/EM-TRhDWtcKtm6lhMcw4FZlzaeZrKpKg3rbFNzx35Us/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM1MjU5/NDYwLTE3NTkzNzU2/OTQtNDcwMS5qcGVn.jpeg"
+    },
+    {
+      "id": 9152970,
+      "master_id": 52240,
+      "title": "Be Here Now",
+      "year": 2016,
+      "format": "2xLP",
+      "label": "Big Brother",
+      "catalog": "RKIDLP85",
+      "thumb": "https://i.discogs.com/KoJmVwW_UsBizWkSlYUI78B2_p6IyV4y5ajbnQfCxyM/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTkxNTI5/NzAtMTYxODQ4MDI5/MS00MDg3LmpwZWc.jpeg"
+    },
+    {
+      "id": 21257035,
+      "master_id": 2388514,
+      "title": "Knebworth 1996",
+      "year": 2021,
+      "format": "3xLP",
+      "label": "Big Brother",
+      "catalog": "RKIDLP98",
+      "thumb": "https://i.discogs.com/BCP5wOQM3ekt-ieGEIryl1cTcEeUX_gI-P6JZHrUs78/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTIxMjU3/MDM1LTE2MzkyNDEw/MjMtNTk3OS5qcGVn.jpeg"
+    },
+    {
+      "id": 35655958,
+      "master_id": 52271,
+      "title": "Familiar To Millions",
+      "year": 2025,
+      "format": "3xLP",
+      "label": "Big Brother Recordings Ltd.",
+      "catalog": "5051961005011",
+      "thumb": "https://i.discogs.com/jhfmrXlHgqcGLbwMPB_vM73qIlKuNzQz6XC9c2lGMsA/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM1NjU1/OTU4LTE3NjMwNzc0/MTgtMTE3OC5qcGVn.jpeg",
+      "special": "LTD"
+    },
+    {
+      "id": 1738664,
+      "master_id": 52277,
+      "title": "Heathen Chemistry",
+      "year": 2002,
+      "format": "2xLP",
+      "label": "Big Brother",
+      "catalog": "rkidlp 25",
+      "thumb": "https://i.discogs.com/ZoWC-iDcc1v8o80pv4M5MBOe75l7o_nxDNAg8fJN-Kg/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE3Mzg2/NjQtMTQ2MTI1MzY0/Ny04NzUxLmpwZWc.jpeg"
+    },
+    {
+      "id": 1791023,
+      "master_id": 52324,
+      "title": "Supersonic",
+      "year": 1994,
+      "format": "12\"",
+      "label": "Creation Records",
+      "catalog": "CRE 176T",
+      "thumb": "https://i.discogs.com/YoL1XrkT4Q3cVuU77XXsmg6uvWEnw1OVrKCHq7ypnX4/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE3OTEw/MjMtMTU0MzcwNDMw/My0yMDQ0LmpwZWc.jpeg"
+    },
+    {
+      "id": 1806540,
+      "master_id": 52303,
+      "title": "Shakermaker",
+      "year": 1994,
+      "format": "7\"",
+      "label": "Creation Records",
+      "catalog": "CRE 182",
+      "thumb": "https://i.discogs.com/MMXfSkO9k3PvAAGIQQG2OImGkREOenOJh1dbfFpdKHE/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE4MDY1/NDAtMTUyMDI3OTky/Mi0zNDk2LmpwZWc.jpeg"
+    },
+    {
+      "id": 1023087,
+      "master_id": 52303,
+      "title": "Shakermaker",
+      "year": 1994,
+      "format": "12\"",
+      "label": "Creation Records",
+      "catalog": "CRE 182T",
+      "thumb": "https://i.discogs.com/_f1YzU5OxlUmSzeIwUuMv5k78WC4UsoEtwANLL-ocl8/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEwMjMw/ODctMTU0MzcxMzIx/MC0zMTE1LmpwZWc.jpeg"
+    },
+    {
+      "id": 1021400,
+      "master_id": 52290,
+      "title": "Live Forever",
+      "year": 1994,
+      "format": "12\"",
+      "label": "Creation Records",
+      "catalog": "CRE 185T",
+      "thumb": "https://i.discogs.com/pxLo78UPOl65Fs7YFxpeNd9tff8073E88gKeRfMqtNk/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEwMjE0/MDAtMTI4NDQ1MjEw/Ny5qcGVn.jpeg"
+    },
+    {
+      "id": 1464169,
+      "master_id": 52243,
+      "title": "Cigarettes & Alcohol",
+      "year": 1994,
+      "format": "7\"",
+      "label": "Creation Records",
+      "catalog": "CRE 190",
+      "thumb": "https://i.discogs.com/ApeETvGQSf3ekM2BTBYI1m2etTNQBLipd3LCAGHlDtA/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE0NjQx/NjktMTQ2NTYyNTIz/MC00MzgwLmpwZWc.jpeg",
+      "special": "NUM"
+    },
+    {
+      "id": 1021388,
+      "master_id": 52243,
+      "title": "Cigarettes & Alcohol",
+      "year": 1994,
+      "format": "12\"",
+      "label": "Creation Records",
+      "catalog": "CRE 190T",
+      "thumb": "https://i.discogs.com/ZUrZUH0XBtCVMCQaUJM5pD27qJzEyFF-NHVTRKyvfyA/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEwMjEz/ODgtMTI4NDQ0ODgx/MS5qcGVn.jpeg"
+    },
+    {
+      "id": 1514155,
+      "master_id": 52351,
+      "title": "Whatever",
+      "year": 1994,
+      "format": "7\"",
+      "label": "Creation Records",
+      "catalog": "CRE 195",
+      "thumb": "https://i.discogs.com/xMYA01g1DB1U7J2iyEmptRaOntyuOmvQkrq6bJg6dUc/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE1MTQx/NTUtMTU1NTQ5Mzg4/MS00MDQ4LmpwZWc.jpeg",
+      "special": "NUM"
+    },
+    {
+      "id": 608083,
+      "master_id": 52351,
+      "title": "Whatever",
+      "year": 1994,
+      "format": "12\"",
+      "label": "Creation Records",
+      "catalog": "CRE 195T",
+      "thumb": "https://i.discogs.com/56LaifNpPjEeKOagxV4pCnjTKgfzprX8WdJmfduQLKg/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTYwODA4/My0xMjg0NTc4NjM5/LmpwZWc.jpeg"
+    },
+    {
+      "id": 685894,
+      "master_id": 52304,
+      "title": "Some Might Say",
+      "year": 1995,
+      "format": "7\"",
+      "label": "Creation Records",
+      "catalog": "CRE 204",
+      "thumb": "https://i.discogs.com/abjeXpPXlhJ-vhg5N2nUkCZWVz5Y50SDtzqPIHPU5Zc/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTY4NTg5/NC0xMjAzNzU0NjQ2/LmpwZWc.jpeg"
+    },
+    {
+      "id": 608035,
+      "master_id": 52304,
+      "title": "Some Might Say",
+      "year": 1995,
+      "format": "12\"",
+      "label": "Creation Records",
+      "catalog": "CRE 204T",
+      "thumb": "https://i.discogs.com/OcvZ0FHlksM4WvzM4poYXpT045nTdLrKqK_WCmHHHxQ/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTYwODAz/NS0xNDUxNzcxODc1/LTIzNDIuanBlZw.jpeg"
+    },
+    {
+      "id": 1441495,
+      "master_id": 52302,
+      "title": "Roll With It",
+      "year": 1995,
+      "format": "7\"",
+      "label": "Creation Records",
+      "catalog": "CRE 212",
+      "thumb": "https://i.discogs.com/G6C-X8OfU3-dyqp3xGF3cl7bHllKbbuDvALavcSTul4/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE0NDE0/OTUtMTMxNjI4NzAx/My5qcGVn.jpeg"
+    },
+    {
+      "id": 1021414,
+      "master_id": 52302,
+      "title": "Roll With It",
+      "year": 1995,
+      "format": "12\"",
+      "label": "Creation Records",
+      "catalog": "CRE 212T",
+      "thumb": "https://i.discogs.com/5xRkVXgwt-X7gr5IzSZEZHEVhYmdZosIQt5afTEG5lo/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEwMjE0/MTQtMTQyMjU0Nzgz/OS0yMDQzLmpwZWc.jpeg"
+    },
+    {
+      "id": 1419395,
+      "master_id": 52366,
+      "title": "Wonderwall",
+      "year": 1995,
+      "format": "7\"",
+      "label": "Creation Records",
+      "catalog": "CRE 215",
+      "thumb": "https://i.discogs.com/wr_QC_1fq45J3RLi43BY1RlSIK8K42cnZgJYb75GdDY/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE0MTkz/OTUtMTIxODEzMjU5/Ny5qcGVn.jpeg"
+    },
+    {
+      "id": 608047,
+      "master_id": 52366,
+      "title": "Wonderwall",
+      "year": 1995,
+      "format": "12\"",
+      "label": "Creation Records",
+      "catalog": "CRE 215T",
+      "thumb": "https://i.discogs.com/O_nHxEE764qRJZrPqY3wzkoEp4rjuzJLa_dhTV6j5Hg/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTYwODA0/Ny0xNTI1NjkzNjYw/LTQzNzUuanBlZw.jpeg"
+    },
+    {
+      "id": 1573953,
+      "master_id": 52267,
+      "title": "Don't Look Back In Anger",
+      "year": 1996,
+      "format": "7\"",
+      "label": "Creation Records",
+      "catalog": "CRE 221",
+      "thumb": "https://i.discogs.com/B0IL-Fr0LFOEuwp0esANJI1F4aCtIWUlmCZPDQ3NkS8/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE1NzM5/NTMtMTYzODY0NjA2/My01NTQyLmpwZWc.jpeg"
+    },
+    {
+      "id": 608074,
+      "master_id": 52267,
+      "title": "Don't Look Back In Anger",
+      "year": 1996,
+      "format": "12\"",
+      "label": "Creation Records",
+      "catalog": "CRE 221T",
+      "thumb": "https://i.discogs.com/i_FmwPoeKeKfF23szvNlFxrAEPRpb5jK3xpE50qQtXQ/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTYwODA3/NC0xNDIyNTQyOTYy/LTkyMjUuanBlZw.jpeg"
+    },
+    {
+      "id": 5565299,
+      "master_id": 52250,
+      "title": "D'You Know What I Mean?",
+      "year": 1997,
+      "format": "7\"",
+      "label": "Creation Records",
+      "catalog": "CRE 256",
+      "thumb": "https://i.discogs.com/bzftHRo9OnpaYlZevd0_HE_8wmfDMPv9KWEoQ0yb5us/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTU1NjUy/OTktMTYwNjYwNjE3/MS00MzQxLmpwZWc.jpeg"
+    },
+    {
+      "id": 1023078,
+      "master_id": 52250,
+      "title": "D'You Know What I Mean?",
+      "year": 1997,
+      "format": "12\"",
+      "label": "Creation Records",
+      "catalog": "CRE 256T",
+      "thumb": "https://i.discogs.com/_MZYviWZazu5AEtOUo80K-A0HnX4MkDpxFsWvKApt9Y/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEwMjMw/NzgtMTM4NDQ1NjM1/NS0zMTUyLnBuZw.jpeg"
+    },
+    {
+      "id": 1575260,
+      "master_id": 52311,
+      "title": "Stand By Me",
+      "year": 1997,
+      "format": "7\"",
+      "label": "Creation Records",
+      "catalog": "CRE 278",
+      "thumb": "https://i.discogs.com/uZsvEzu2XJeJv_WTC0HcY5uWXYWIj613ZCGUdK_1k88/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE1NzUy/NjAtMTQ3NjU2NzEy/OS05NjI4LnBuZw.jpeg"
+    },
+    {
+      "id": 1575273,
+      "master_id": 52236,
+      "title": "All Around The World",
+      "year": 1998,
+      "format": "7\"",
+      "label": "Creation Records",
+      "catalog": "CRE 282",
+      "thumb": "https://i.discogs.com/mGgRFU834tPGEDn0XcpxevTt-KUg-n_KZhue7q2M_04/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE1NzUy/NzMtMTM5NDIyMDM4/OS05OTE1LmpwZWc.jpeg",
+      "special": "NUM"
+    },
+    {
+      "id": 939519,
+      "master_id": 52220,
+      "title": "(What's The Story) Morning Glory?",
+      "year": 1995,
+      "format": "2xLP",
+      "label": "Creation Records",
+      "catalog": "CRE LP 189",
+      "thumb": "https://i.discogs.com/56-EgwTHcEvSdIqvFLZrd479gaMor5g2xglk9lST-74/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTkzOTUx/OS0xNDI2NDUwNDgz/LTgwNDkuanBlZw.jpeg"
+    },
+    {
+      "id": 793223,
+      "master_id": 52351,
+      "title": "Whatever",
+      "year": 1994,
+      "format": "Cass",
+      "label": "Creation Records",
+      "catalog": "CRECS 195",
+      "thumb": "https://i.discogs.com/LPU8RJrJo7tmQEjDHwRpD2AoQ5LLWByPPmS-istLXh0/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTc5MzIy/My0xNjIzMTY2MjUx/LTc4MTUuanBlZw.jpeg"
+    },
+    {
+      "id": 513557,
+      "master_id": 52250,
+      "title": "D'You Know What I Mean?",
+      "year": 1997,
+      "format": "Cass",
+      "label": "Creation Records",
+      "catalog": "CRECS 256",
+      "thumb": "https://i.discogs.com/4o_FVquG0cEiZUF6mpzWHhtgLSbfMPURttL861-7T0k/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTUxMzU1/Ny0xMTkzNzczOTUy/LmpwZWc.jpeg"
+    },
+    {
+      "id": 1405842,
+      "master_id": 52262,
+      "title": "Don't Believe The Truth",
+      "year": 2005,
+      "format": "LP",
+      "label": "Epic",
+      "catalog": "E 94493",
+      "thumb": "https://i.discogs.com/dpar1QYi6O3JMlkR0bh88IaWsNF-INlMYt1Qas21lYY/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE0MDU4/NDItMTIxOTg2NjI4/Mi5qcGVn.jpeg"
+    },
+    {
+      "id": 5588137,
+      "master_id": 364232,
+      "title": "Wibbling Rivalry",
+      "year": 1995,
+      "format": "7\"",
+      "label": "Fierce Panda",
+      "catalog": "NING 12",
+      "thumb": "https://i.discogs.com/PQtG5DLwpJHgv3mZLrLt36Z_RdftY-vCvM3Baz_bXSw/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTU1ODgx/MzctMTQwNTcxMzM4/Ni0yMDgyLmpwZWc.jpeg"
+    },
+    {
+      "id": 3883355,
+      "master_id": 52240,
+      "title": "Be Here Now",
+      "year": 1997,
+      "format": "Cass",
+      "label": "Helter Skelter",
+      "catalog": "488187 4",
+      "thumb": "https://i.discogs.com/FJwD2a4lFD_OMbD21Fyup47ORMGVcNEapCsmQq9Z2w0/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM4ODMz/NTUtMTQyOTgwNTU4/MS02NjIwLmpwZWc.jpeg"
+    },
+    {
+      "id": 1221813,
+      "master_id": 52240,
+      "title": "Be Here Now",
+      "year": 1997,
+      "format": "2xLP",
+      "label": "Helter Skelter",
+      "catalog": "HES 488187 1",
+      "thumb": "https://i.discogs.com/bMqelrWD8huzVNpKlDk0sJvkLgFA9bs7j7KZXphsbK8/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEyMjE4/MTMtMTI3NTk5NjM5/Mi5qcGVn.jpeg"
+    },
+    {
+      "id": 2592947,
+      "master_id": 52344,
+      "title": "The Masterplan",
+      "year": 1998,
+      "format": "2xLP",
+      "label": "Helter Skelter",
+      "catalog": "HES 491830 1",
+      "thumb": "https://i.discogs.com/QyIWbLOLtvphYYcLnA3ItULvMEzJSusRns-Rw-aMARQ/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI1OTI5/NDctMTQ1Nzc2MTg2/Mi05MDQ3LmpwZWc.jpeg"
+    },
+    {
+      "id": 1367936,
+      "master_id": 52311,
+      "title": "Stand By Me",
+      "year": 1997,
+      "format": "12\"",
+      "label": "Helter Skelter",
+      "catalog": "HES 664999 6",
+      "thumb": "https://i.discogs.com/Q33y4TPG0_1YDaeRYUgvutq4C_gRY9_nOBgigCLhJlY/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEzNjc5/MzYtMTIxMzYxNzc3/MS5qcGVn.jpeg"
+    },
+    {
+      "id": 1433592,
+      "master_id": 52236,
+      "title": "All Around The World",
+      "year": 1998,
+      "format": "12\"",
+      "label": "Helter Skelter",
+      "catalog": "HES 665269 6",
+      "thumb": "https://i.discogs.com/SiUT_wJpWcNxtKFJ83yoZsukAR4UeV8mgq6OqD3BcHo/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE0MzM1/OTItMTIxOTM4ODYy/Ny5qcGVn.jpeg"
+    },
+    {
+      "id": 1734314,
+      "master_id": 52255,
+      "title": "Definitely Maybe",
+      "year": 1994,
+      "format": "2xLP",
+      "label": "Helter Skelter",
+      "catalog": "HES 477318 1",
+      "thumb": "https://i.discogs.com/fXO1QSQJGZgK0BdZtdAu6zDfiQ0wPCiMwMP2uafYyRI/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE3MzQz/MTQtMTQwMTEyNDg2/MC0zNDg2LmpwZWc.jpeg"
+    },
+    {
+      "id": 3326183,
+      "master_id": 52220,
+      "title": "(What's The Story) Morning Glory ?",
+      "year": 1995,
+      "format": "Cass",
+      "label": "Helter Skelter",
+      "catalog": "HES 481020 4",
+      "thumb": "https://i.discogs.com/m9NQARG_fpndiYvOU6dMDTMBPCWM-VUdjlXVb9XPD_k/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMzMjYx/ODMtMTQxNjU5ODcx/MS0xODY4LmpwZWc.jpeg"
+    },
+    {
+      "id": 3883382,
+      "master_id": 52344,
+      "title": "The Masterplan",
+      "year": 1998,
+      "format": "Cass",
+      "label": "Helter Skelter",
+      "catalog": "HES 491830 4",
+      "thumb": "https://i.discogs.com/q4kXa87GPLazYLlv51zGCitv7jxn1hlTG2H1BUiq-Xo/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM4ODMz/ODItMTQ3MDI0NDU3/OS0zODg4LnBuZw.jpeg"
+    },
+    {
+      "id": 3043883,
+      "master_id": 52313,
+      "title": "Standing On The Shoulder Of Giants",
+      "year": 2000,
+      "format": "Cass",
+      "label": "Helter Skelter",
+      "catalog": "HES 496844 4",
+      "thumb": "https://i.discogs.com/6Nx_ND7k_CaUM8olcpWDMY6AT7cV2zCuEK5HcasRggw/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMwNDM4/ODMtMTQ3MDMyMTky/Ni0zMjI5LnBuZw.jpeg"
+    },
+    {
+      "id": 6131191,
+      "master_id": 52242,
+      "title": "Champagne Supernova",
+      "year": 2014,
+      "format": "7\"",
+      "label": "Rolling Stone",
+      "catalog": "none",
+      "thumb": "https://i.discogs.com/8JYFZKJCpifD92bOQ7od6yKpFXNdM6HczmT3sYeR5_I/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTYxMzEx/OTEtMTQxMTgzODk5/OC00NTUwLmpwZWc.jpeg",
+      "special": "PROMO"
+    }
+  ]
+}

@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Oasis — Vinyyli­kokoelma</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:       #0c0c0d;
+  --bg2:      #141416;
+  --bg3:      #1c1c1f;
+  --line:     rgba(255,255,255,.08);
+  --text:     #e8e6e0;
+  --muted:    #7a7870;
+  --accent:   #c8a96e;
+  --accent2:  #4a9eff;
+  --green:    #3dba7e;
+  --red:      #e05252;
+  --amber:    #e8a838;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 15px; line-height: 1.6; }
+body { min-height: 100vh; }
+
+/* ── Header ── */
+header {
+  border-bottom: 1px solid var(--line);
+  padding: 2rem 2rem 1.5rem;
+  display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+}
+.logo { font-family: 'Bebas Neue', sans-serif; font-size: 3.2rem; letter-spacing: .04em; color: var(--accent); line-height: 1; }
+.logo span { color: var(--muted); font-size: 1rem; font-family: 'DM Mono', monospace; display: block; letter-spacing: .12em; margin-bottom: .3rem; }
+.header-meta { text-align: right; font-size: .8rem; color: var(--muted); font-family: 'DM Mono', monospace; }
+.header-meta strong { color: var(--accent); font-size: 1.6rem; font-family: 'Bebas Neue', sans-serif; display: block; letter-spacing: .05em; }
+
+/* ── Stats bar ── */
+.stats-bar {
+  display: flex; gap: 0; border-bottom: 1px solid var(--line); overflow-x: auto;
+}
+.stat-item {
+  flex: 1; min-width: 100px; padding: 1rem 1.5rem; border-right: 1px solid var(--line);
+  font-family: 'DM Mono', monospace;
+}
+.stat-item:last-child { border-right: none; }
+.stat-item .n { font-size: 1.6rem; font-family: 'Bebas Neue', sans-serif; letter-spacing: .04em; }
+.stat-item .l { font-size: .7rem; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; }
+.n.g { color: var(--green); }
+.n.r { color: var(--red); }
+.n.a { color: var(--accent); }
+
+/* ── Toolbar ── */
+.toolbar {
+  padding: 1rem 2rem; display: flex; gap: .75rem; flex-wrap: wrap; align-items: center;
+  border-bottom: 1px solid var(--line);
+}
+.search-wrap { position: relative; flex: 1; min-width: 180px; }
+.search-wrap input {
+  width: 100%; background: var(--bg3); border: 1px solid var(--line); color: var(--text);
+  padding: .5rem .75rem .5rem 2rem; border-radius: 4px; font-family: 'DM Mono', monospace; font-size: .8rem;
+  outline: none; transition: border-color .15s;
+}
+.search-wrap input:focus { border-color: var(--accent); }
+.search-wrap::before { content: '⌕'; position: absolute; left: .6rem; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 1rem; pointer-events: none; }
+select {
+  background: var(--bg3); border: 1px solid var(--line); color: var(--text);
+  padding: .5rem .75rem; border-radius: 4px; font-family: 'DM Mono', monospace; font-size: .8rem;
+  outline: none; cursor: pointer;
+}
+.tabs { display: flex; gap: .25rem; flex-wrap: wrap; }
+.tab {
+  padding: .35rem .9rem; font-size: .75rem; font-family: 'DM Mono', monospace; letter-spacing: .06em;
+  border: 1px solid var(--line); border-radius: 3px; cursor: pointer; color: var(--muted);
+  background: transparent; transition: all .15s; white-space: nowrap;
+}
+.tab:hover { border-color: var(--accent); color: var(--accent); }
+.tab.active { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+
+/* ── Grid ── */
+.grid-wrap { padding: 1.5rem 2rem; }
+.section-head {
+  font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: .08em;
+  color: var(--muted); border-bottom: 1px solid var(--line); padding-bottom: .4rem; margin: 1.5rem 0 .75rem;
+  display: flex; align-items: center; gap: .75rem;
+}
+.chip { font-family: 'DM Mono', monospace; font-size: .65rem; padding: 1px 7px; border-radius: 2px; }
+.chip-g { background: rgba(61,186,126,.15); color: var(--green); }
+.chip-r { background: rgba(224,82,82,.15); color: var(--red); }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
+  gap: 1px; background: var(--line);
+}
+.card {
+  background: var(--bg2); cursor: default; position: relative;
+  transition: background .15s;
+}
+.card:hover { background: var(--bg3); }
+.card.missing { opacity: .55; }
+.card img {
+  width: 100%; aspect-ratio: 1; object-fit: cover; display: block;
+  filter: saturate(.9);
+}
+.card.missing img { filter: saturate(0) brightness(.7); }
+.card-no-img {
+  width: 100%; aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+  background: var(--bg3); font-size: 2.5rem;
+}
+.card-info { padding: .6rem .7rem .7rem; }
+.card-title {
+  font-size: .78rem; font-weight: 500; color: var(--text); line-height: 1.3;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  min-height: 2rem;
+}
+.card.missing .card-title { color: var(--muted); }
+.card-sub { font-family: 'DM Mono', monospace; font-size: .68rem; color: var(--muted); margin-top: .25rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.fmt-tag {
+  position: absolute; top: 6px; right: 6px;
+  font-family: 'DM Mono', monospace; font-size: .6rem; font-weight: 500;
+  padding: 1px 5px; border-radius: 2px; letter-spacing: .04em;
+}
+.ft-lp  { background: rgba(61,186,126,.2); color: var(--green); }
+.ft-7   { background: rgba(74,158,255,.2); color: var(--accent2); }
+.ft-12  { background: rgba(200,169,110,.2); color: var(--accent); }
+.ft-oth { background: rgba(122,120,112,.2); color: var(--muted); }
+.sp-tag {
+  position: absolute; top: 6px; left: 6px;
+  font-family: 'DM Mono', monospace; font-size: .58rem; font-weight: 500;
+  padding: 1px 5px; border-radius: 2px;
+  background: rgba(232,168,56,.2); color: var(--amber);
+}
+.miss-tag {
+  position: absolute; top: 6px; left: 6px;
+  font-family: 'DM Mono', monospace; font-size: .58rem; font-weight: 500;
+  padding: 1px 5px; border-radius: 2px;
+  background: rgba(224,82,82,.2); color: var(--red);
+}
+.status-bar {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+}
+.card.owned  .status-bar { background: var(--green); }
+.card.missing .status-bar { background: var(--red); }
+
+/* ── Admin panel ── */
+#admin-bar {
+  display: none; background: var(--bg3); border-bottom: 1px solid var(--accent);
+  padding: .75rem 2rem; align-items: center; gap: 1rem; flex-wrap: wrap;
+}
+#admin-bar.visible { display: flex; }
+#admin-bar span { font-family: 'DM Mono', monospace; font-size: .75rem; color: var(--accent); }
+.btn {
+  font-family: 'DM Mono', monospace; font-size: .75rem; padding: .4rem .9rem;
+  border: 1px solid var(--accent); color: var(--accent); background: transparent;
+  border-radius: 3px; cursor: pointer; transition: all .15s;
+}
+.btn:hover { background: var(--accent); color: var(--bg); }
+.btn.danger { border-color: var(--red); color: var(--red); }
+.btn.danger:hover { background: var(--red); color: #fff; }
+
+/* ── Login modal ── */
+#login-modal {
+  display: none; position: fixed; inset: 0; background: rgba(0,0,0,.85);
+  align-items: center; justify-content: center; z-index: 100;
+}
+#login-modal.visible { display: flex; }
+.modal-box {
+  background: var(--bg2); border: 1px solid var(--line); padding: 2rem; width: 340px; border-radius: 4px;
+}
+.modal-box h2 { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: .06em; color: var(--accent); margin-bottom: 1rem; }
+.modal-box label { font-family: 'DM Mono', monospace; font-size: .72rem; color: var(--muted); display: block; margin-bottom: .3rem; }
+.modal-box input[type=password] {
+  width: 100%; background: var(--bg3); border: 1px solid var(--line); color: var(--text);
+  padding: .5rem .75rem; border-radius: 3px; font-family: 'DM Mono', monospace; font-size: .85rem;
+  outline: none; margin-bottom: 1rem;
+}
+.modal-box input:focus { border-color: var(--accent); }
+.modal-row { display: flex; gap: .5rem; justify-content: flex-end; }
+.modal-err { font-family: 'DM Mono', monospace; font-size: .72rem; color: var(--red); margin-bottom: .5rem; display: none; }
+
+/* ── Footer ── */
+footer { border-top: 1px solid var(--line); padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: .5rem; }
+footer p { font-family: 'DM Mono', monospace; font-size: .72rem; color: var(--muted); }
+footer a { color: var(--accent); text-decoration: none; }
+#login-btn { font-family: 'DM Mono', monospace; font-size: .72rem; color: var(--muted); background: none; border: none; cursor: pointer; }
+#login-btn:hover { color: var(--accent); }
+
+@media (max-width: 600px) {
+  header, .toolbar, .grid-wrap, footer { padding-left: 1rem; padding-right: 1rem; }
+  .grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <span>VINYL COLLECTION</span>
+    Oasis
+  </div>
+  <div class="header-meta" id="header-meta">
+    <strong id="total-count">—</strong>
+    levyä kokoelmassa
+  </div>
+</header>
+
+<div class="stats-bar" id="stats-bar"></div>
+
+<div id="admin-bar">
+  <span>⚡ Muokkaustila päällä</span>
+  <button class="btn" onclick="syncDiscogs()">↻ Synkronoi Discogs</button>
+  <button class="btn danger" onclick="adminLogout()">Kirjaudu ulos</button>
+</div>
+
+<div class="toolbar">
+  <div class="search-wrap">
+    <input id="search" type="text" placeholder="Hae levyä..." autocomplete="off">
+  </div>
+  <select id="sort">
+    <option value="year">Vuosi</option>
+    <option value="title">Nimi A–Z</option>
+    <option value="status">Omistaa ensin</option>
+    <option value="added">Viimeksi lisätty</option>
+  </select>
+  <div class="tabs" id="tabs">
+    <button class="tab active" data-tab="all">Kaikki</button>
+    <button class="tab" data-tab="owned">Omistaa</button>
+    <button class="tab" data-tab="missing">Puuttuu</button>
+    <button class="tab" data-tab="albums">Albumit</button>
+    <button class="tab" data-tab="singles">Sinkut</button>
+    <button class="tab" data-tab="special">Erikoiset ★</button>
+    <button class="tab" data-tab="era">Aikakausi</button>
+  </div>
+</div>
+
+<main class="grid-wrap" id="main"></main>
+
+<footer>
+  <p>Päivitetty: <span id="updated">—</span> &nbsp;·&nbsp; <a href="https://www.discogs.com/user/freeal/collection" target="_blank">Discogs-profiili ↗</a></p>
+  <button id="login-btn" onclick="showLogin()">⚙</button>
+</footer>
+
+<!-- Login modal -->
+<div id="login-modal">
+  <div class="modal-box">
+    <h2>Kirjaudu sisään</h2>
+    <label>Salasana</label>
+    <input type="password" id="pwd-input" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
+    <p class="modal-err" id="login-err">Väärä salasana</p>
+    <div class="modal-row">
+      <button class="btn" style="border-color:var(--muted);color:var(--muted)" onclick="hideLogin()">Peruuta</button>
+      <button class="btn" onclick="doLogin()">Kirjaudu</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── Muuta tämä omaan salasanaasi (sha256 hash) ───────────────────────────────
+// Laske hash osoitteessa: https://emn178.github.io/online-tools/sha256.html
+// Oletussalasana: "oasis1994" — VAIHDA tämä ennen julkaisua
+const PASS_HASH = 'a47f54bef75b9dc8a00cd67cc3fb77e756b0c1a5c95f2048a5a9b0e14c5c2e7b';
+// ──────────────────────────────────────────────────────────────────────────────
+
+const DISCOGRAPHY_MASTERS = [
+  {mid:52245,title:"Columbia",year:1993,fmt:"7\"",label:"Creation"},
+  {mid:52324,title:"Supersonic",year:1994,fmt:"7\"",label:"Creation"},
+  {mid:52303,title:"Shakermaker",year:1994,fmt:"7\"",label:"Creation"},
+  {mid:52290,title:"Live Forever",year:1994,fmt:"7\"",label:"Creation"},
+  {mid:52243,title:"Cigarettes & Alcohol",year:1994,fmt:"7\"",label:"Creation"},
+  {mid:52255,title:"Definitely Maybe",year:1994,fmt:"2xLP",label:"Creation"},
+  {mid:52351,title:"Whatever",year:1994,fmt:"7\"",label:"Creation"},
+  {mid:1791077,title:"I Am The Walrus",year:1994,fmt:"7\"",label:"Creation"},
+  {mid:52220,title:"(What's The Story) Morning Glory?",year:1995,fmt:"2xLP",label:"Creation"},
+  {mid:52302,title:"Roll With It",year:1995,fmt:"7\"",label:"Creation"},
+  {mid:52304,title:"Some Might Say",year:1995,fmt:"7\"",label:"Creation"},
+  {mid:52366,title:"Wonderwall",year:1995,fmt:"7\"",label:"Creation"},
+  {mid:52246,title:"Cum On Feel The Noize",year:1995,fmt:"7\"",label:"Creation"},
+  {mid:345613,title:"Acquiesce",year:1995,fmt:"7\"",label:"Creation"},
+  {mid:157318,title:"Morning Glory",year:1995,fmt:"7\"",label:"Creation"},
+  {mid:52267,title:"Don't Look Back In Anger",year:1995,fmt:"7\"",label:"Creation"},
+  {mid:52242,title:"Champagne Supernova",year:1996,fmt:"7\"",label:"Creation"},
+  {mid:52250,title:"D'You Know What I Mean?",year:1997,fmt:"7\"",label:"Creation"},
+  {mid:52311,title:"Stand By Me",year:1997,fmt:"7\"",label:"Creation"},
+  {mid:52240,title:"Be Here Now",year:1997,fmt:"2xLP",label:"Creation"},
+  {mid:52266,title:"Don't Go Away",year:1997,fmt:"7\"",label:"Creation"},
+  {mid:1007537,title:"I Hope, I Think, I Know",year:1997,fmt:"7\"",label:"Creation"},
+  {mid:52236,title:"All Around The World",year:1997,fmt:"7\"",label:"Creation"},
+  {mid:52344,title:"The Masterplan",year:1998,fmt:"2xLP",label:"Creation"},
+  {mid:52275,title:"Go Let It Out",year:1999,fmt:"7\"",label:"Big Brother"},
+  {mid:52313,title:"Standing On The Shoulder Of Giants",year:2000,fmt:"LP",label:"Big Brother"},
+  {mid:52322,title:"Sunday Morning Call",year:2000,fmt:"7\"",label:"Big Brother"},
+  {mid:52374,title:"Who Feels Love?",year:2000,fmt:"7\"",label:"Big Brother"},
+  {mid:52271,title:"Familiar To Millions",year:2000,fmt:"3xLP",label:"Big Brother"},
+  {mid:52277,title:"Heathen Chemistry",year:2002,fmt:"2xLP",label:"Big Brother"},
+  {mid:52332,title:"The Hindu Times",year:2002,fmt:"7\"",label:"Big Brother"},
+  {mid:52316,title:"Stop Crying Your Heart Out",year:2002,fmt:"7\"",label:"Big Brother"},
+  {mid:52286,title:"Little By Little",year:2002,fmt:"7\"",label:"Big Brother"},
+  {mid:52308,title:"Songbird",year:2002,fmt:"7\"",label:"Big Brother"},
+  {mid:52262,title:"Don't Believe The Truth",year:2005,fmt:"LP",label:"Big Brother"},
+  {mid:52291,title:"Lyla",year:2005,fmt:"7\"",label:"Big Brother"},
+  {mid:52336,title:"The Importance Of Being Idle",year:2005,fmt:"7\"",label:"Big Brother"},
+  {mid:52283,title:"Let There Be Love",year:2005,fmt:"10\"",label:"Big Brother"},
+  {mid:52317,title:"Stop The Clocks",year:2006,fmt:"2xLP",label:"Big Brother"},
+  {mid:52257,title:"Dig Out Your Soul",year:2008,fmt:"2xLP",label:"Big Brother"},
+  {mid:52358,title:"The Shock Of The Lightning",year:2008,fmt:"7\"",label:"Big Brother"},
+  {mid:52278,title:"I'm Outta Time",year:2008,fmt:"7\"",label:"Big Brother"},
+  {mid:52270,title:"Falling Down",year:2008,fmt:"7\"",label:"Big Brother"},
+  {mid:254937,title:"Time Flies... 1994–2009",year:2010,fmt:"2xLP",label:"Big Brother"},
+  {mid:2388514,title:"Knebworth 1996",year:2021,fmt:"3xLP",label:"Big Brother"},
+];
+
+let DATA = null;
+let currentTab = 'all';
+let isAdmin = false;
+
+async function sha256(msg) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(msg));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+}
+
+async function loadData() {
+  try {
+    const r = await fetch('data/collection.json?v=' + Date.now());
+    DATA = await r.json();
+    document.getElementById('total-count').textContent = DATA.meta.total;
+    document.getElementById('updated').textContent = DATA.meta.updated;
+    renderStats();
+    render();
+  } catch(e) {
+    document.getElementById('main').innerHTML = '<p style="padding:2rem;color:var(--muted);font-family:monospace">Virhe ladattaessa dataa. Varmista että data/collection.json on olemassa.</p>';
+  }
+}
+
+function getOwned() { return DATA ? DATA.owned : []; }
+
+function buildAllItems() {
+  const owned = getOwned();
+  const ownedMids = new Set(owned.map(o => o.master_id));
+  const missing = DISCOGRAPHY_MASTERS
+    .filter(d => !ownedMids.has(d.mid))
+    .map(d => ({...d, status:'missing', id: d.mid}));
+  return [
+    ...owned.map(o => ({...o, status:'owned'})),
+    ...missing
+  ];
+}
+
+function fmtClass(fmt) {
+  if (!fmt) return 'oth';
+  if (fmt.includes('LP') || fmt.includes('xLP')) return 'lp';
+  if (fmt.startsWith('7')) return 's7';
+  if (fmt.startsWith('12')) return 's12';
+  return 'oth';
+}
+const fmtTagClass = {lp:'ft-lp', s7:'ft-7', s12:'ft-12', oth:'ft-oth'};
+function era(y) {
+  if (y <= 1996) return 'Creation era (1994–96)';
+  if (y <= 1999) return 'Late Creation (1997–99)';
+  if (y <= 2005) return 'Big Brother era (2000–05)';
+  if (y <= 2009) return 'Dig Out era (2006–09)';
+  return 'Reissues & uudet (2010–)';
+}
+
+function renderStats() {
+  const all = buildAllItems();
+  const owned = all.filter(i=>i.status==='owned').length;
+  const miss  = all.filter(i=>i.status==='missing').length;
+  const lps   = getOwned().filter(i=>i.format&&i.format.includes('LP')).length;
+  const sp    = getOwned().filter(i=>i.special).length;
+  const pct   = Math.round(owned/(owned+miss)*100);
+  document.getElementById('stats-bar').innerHTML = `
+    <div class="stat-item"><div class="n g">${owned}</div><div class="l">Omistaa</div></div>
+    <div class="stat-item"><div class="n r">${miss}</div><div class="l">Puuttuu</div></div>
+    <div class="stat-item"><div class="n a">${pct}%</div><div class="l">Kattavuus</div></div>
+    <div class="stat-item"><div class="n" style="color:var(--text)">${lps}</div><div class="l">LP:t</div></div>
+    <div class="stat-item"><div class="n" style="color:var(--amber)">${sp}</div><div class="l">Erikoiset</div></div>
+  `;
+}
+
+function cardHTML(item) {
+  const fc = fmtClass(item.format || item.fmt || '');
+  const ftc = fmtTagClass[fc] || 'ft-oth';
+  const fl = (item.format || item.fmt || '?').replace('xLP','×LP');
+  const imgEl = item.thumb
+    ? `<img src="${item.thumb}" loading="lazy" onerror="this.outerHTML='<div class=\\"card-no-img\\">◉</div>'">`
+    : `<div class="card-no-img">◉</div>`;
+  const badge = item.status==='missing'
+    ? `<span class="miss-tag">PUUTTUU</span>`
+    : (item.special ? `<span class="sp-tag">${item.special}</span>` : '');
+  const label = (item.label||'').split(',')[0].trim().slice(0,20);
+  return `<div class="card ${item.status}">
+    ${imgEl}
+    ${badge}
+    <span class="fmt-tag ${ftc}">${fl}</span>
+    <div class="status-bar"></div>
+    <div class="card-info">
+      <div class="card-title">${item.title}</div>
+      <div class="card-sub">${item.year||''} · ${label}</div>
+      ${item.catalog ? `<div class="card-sub" style="opacity:.6">${item.catalog}</div>` : ''}
+    </div>
+  </div>`;
+}
+
+function getFiltered() {
+  let items = buildAllItems();
+  const s = (document.getElementById('search').value||'').toLowerCase();
+  if (currentTab==='owned')   items = items.filter(i=>i.status==='owned');
+  if (currentTab==='missing') items = items.filter(i=>i.status==='missing');
+  if (currentTab==='albums')  items = items.filter(i=>(i.format||i.fmt||'').includes('LP'));
+  if (currentTab==='singles') items = items.filter(i=>{ const f=i.format||i.fmt||''; return f.startsWith('7')||f.startsWith('12')||f.startsWith('10'); });
+  if (currentTab==='special') items = items.filter(i=>i.special);
+  if (s) items = items.filter(i=>(i.title||'').toLowerCase().includes(s)||(i.catalog||'').toLowerCase().includes(s));
+  const srt = document.getElementById('sort').value;
+  if (srt==='year')   items.sort((a,b)=>(a.year||0)-(b.year||0));
+  if (srt==='title')  items.sort((a,b)=>(a.title||'').localeCompare(b.title||''));
+  if (srt==='status') items.sort((a,b)=>a.status==='owned'&&b.status==='missing'?-1:1);
+  return items;
+}
+
+function render() {
+  if (!DATA) return;
+  const main = document.getElementById('main');
+  if (currentTab==='era') {
+    let all = buildAllItems().sort((a,b)=>(a.year||0)-(b.year||0));
+    const s = (document.getElementById('search').value||'').toLowerCase();
+    if (s) all = all.filter(i=>(i.title||'').toLowerCase().includes(s));
+    const groups = {};
+    all.forEach(i=>{ const e=era(i.year); if(!groups[e]) groups[e]=[]; groups[e].push(i); });
+    const order=['Creation era (1994–96)','Late Creation (1997–99)','Big Brother era (2000–05)','Dig Out era (2006–09)','Reissues & uudet (2010–)'];
+    main.innerHTML = order.filter(k=>groups[k]).map(k=>{
+      const ow=groups[k].filter(i=>i.status==='owned').length;
+      const ms=groups[k].filter(i=>i.status==='missing').length;
+      return `<div class="section-head">${k}<span class="chip chip-g">${ow} omistaa</span>${ms?`<span class="chip chip-r">${ms} puuttuu</span>`:''}</div><div class="grid">${groups[k].map(cardHTML).join('')}</div>`;
+    }).join('');
+    return;
+  }
+  const items = getFiltered();
+  main.innerHTML = items.length
+    ? `<div class="grid">${items.map(cardHTML).join('')}</div>`
+    : `<p style="padding:2rem;color:var(--muted);font-family:monospace">Ei tuloksia.</p>`;
+}
+
+// ── Admin ──
+function showLogin() { document.getElementById('login-modal').classList.add('visible'); document.getElementById('pwd-input').focus(); }
+function hideLogin() { document.getElementById('login-modal').classList.remove('visible'); document.getElementById('login-err').style.display='none'; }
+
+async function doLogin() {
+  const val = document.getElementById('pwd-input').value;
+  const hash = await sha256(val);
+  if (hash === PASS_HASH) {
+    isAdmin = true;
+    sessionStorage.setItem('admin','1');
+    document.getElementById('admin-bar').classList.add('visible');
+    hideLogin();
+    document.getElementById('pwd-input').value = '';
+  } else {
+    document.getElementById('login-err').style.display='block';
+  }
+}
+function adminLogout() {
+  isAdmin = false;
+  sessionStorage.removeItem('admin');
+  document.getElementById('admin-bar').classList.remove('visible');
+}
+function syncDiscogs() {
+  alert('Aja terminaalissa:\n\npython3 update.py SINUN_TOKEN\ngit add data/collection.json\ngit commit -m "Päivitä kokoelma"\ngit push\n\nSivu päivittyy automaattisesti.');
+}
+
+// ── Events ──
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    currentTab = t.dataset.tab;
+    render();
+  });
+});
+document.getElementById('search').addEventListener('input', render);
+document.getElementById('sort').addEventListener('change', render);
+
+if (sessionStorage.getItem('admin')) { isAdmin=true; document.getElementById('admin-bar').classList.add('visible'); }
+
+loadData();
+</script>
+</body>
+</html>
