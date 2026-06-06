@@ -7,21 +7,36 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0c0c0d;--bg2:#141416;--bg3:#1c1c1f;--line:rgba(255,255,255,.08);--text:#e8e6e0;--muted:#7a7870;--accent:#c8a96e;--acc2:#4a9eff;--green:#3dba7e;--red:#e05252;--amber:#e8a838;}
+:root {
+  --bg:    #0c0c0d;
+  --bg2:   #141416;
+  --bg3:   #1c1c1f;
+  --line:  rgba(255,255,255,.08);
+  --text:  #e8e6e0;
+  --muted: #7a7870;
+  --accent:#c8a96e;
+  --acc2:  #4a9eff;
+  --green: #3dba7e;
+  --red:   #e05252;
+  --amber: #e8a838;
+}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.6;}
 body{min-height:100vh;}
+
 header{border-bottom:1px solid var(--line);padding:2rem 2rem 1.5rem;display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
 .logo{font-family:'Bebas Neue',sans-serif;font-size:3.2rem;letter-spacing:.04em;color:var(--accent);line-height:1;}
 .logo span{color:var(--muted);font-size:1rem;font-family:'DM Mono',monospace;display:block;letter-spacing:.12em;margin-bottom:.3rem;}
 .header-meta{text-align:right;font-size:.8rem;color:var(--muted);font-family:'DM Mono',monospace;}
 .header-meta strong{color:var(--accent);font-size:1.6rem;font-family:'Bebas Neue',sans-serif;display:block;letter-spacing:.05em;}
+
 .stats-bar{display:flex;border-bottom:1px solid var(--line);overflow-x:auto;}
 .stat-item{flex:1;min-width:100px;padding:1rem 1.5rem;border-right:1px solid var(--line);font-family:'DM Mono',monospace;}
 .stat-item:last-child{border-right:none;}
 .stat-item .n{font-size:1.6rem;font-family:'Bebas Neue',sans-serif;letter-spacing:.04em;}
 .stat-item .l{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;}
 .n.g{color:var(--green)}.n.r{color:var(--red)}.n.a{color:var(--accent)}
+
 .toolbar{padding:1rem 2rem;display:flex;gap:.75rem;flex-wrap:wrap;align-items:center;border-bottom:1px solid var(--line);}
 .search-wrap{position:relative;flex:1;min-width:180px;}
 .search-wrap input{width:100%;background:var(--bg3);border:1px solid var(--line);color:var(--text);padding:.5rem .75rem .5rem 2rem;border-radius:4px;font-family:'DM Mono',monospace;font-size:.8rem;outline:none;transition:border-color .15s;}
@@ -32,40 +47,36 @@ select{background:var(--bg3);border:1px solid var(--line);color:var(--text);padd
 .tab{padding:.35rem .9rem;font-size:.75rem;font-family:'DM Mono',monospace;letter-spacing:.06em;border:1px solid var(--line);border-radius:3px;cursor:pointer;color:var(--muted);background:transparent;transition:all .15s;white-space:nowrap;}
 .tab:hover{border-color:var(--accent);color:var(--accent);}
 .tab.active{background:var(--accent);color:var(--bg);border-color:var(--accent);}
+
 .grid-wrap{padding:1.5rem 2rem;}
 .section-head{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.08em;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:.4rem;margin:1.5rem 0 .75rem;display:flex;align-items:center;gap:.75rem;}
 .chip{font-family:'DM Mono',monospace;font-size:.65rem;padding:1px 7px;border-radius:2px;}
 .chip-g{background:rgba(61,186,126,.15);color:var(--green);}
 .chip-r{background:rgba(224,82,82,.15);color:var(--red);}
+
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:1px;background:var(--line);}
-.card{background:var(--bg2);position:relative;overflow:hidden;display:block;text-decoration:none;color:inherit;}
+
+.card{background:var(--bg2);position:relative;cursor:pointer;display:block;text-decoration:none;color:inherit;}
 .card.missing{opacity:.6;}
-.card-img-wrap{width:100%;aspect-ratio:1/1;overflow:hidden;position:relative;background:var(--bg3);}
-.card-img-wrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.9);}
-.card.missing .card-img-wrap img{filter:saturate(0) brightness(.65);}
-.card-img-wrap svg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:40px;height:40px;opacity:.2;}
+.card img{width:100%;aspect-ratio:1;object-fit:cover;display:block;filter:saturate(.9);}
+.card.missing img{filter:saturate(0) brightness(.65);}
+.card-placeholder{width:100%;aspect-ratio:1;display:flex;align-items:center;justify-content:center;background:var(--bg3);}
+.card-placeholder svg{opacity:.25;}
 .card-info{padding:.6rem .7rem .7rem;}
 .card-title{font-size:.78rem;font-weight:500;color:var(--text);line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2rem;}
 .card.missing .card-title{color:var(--muted);}
 .card-sub{font-family:'DM Mono',monospace;font-size:.68rem;color:var(--muted);margin-top:.25rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.fmt-tag{position:absolute;top:6px;right:6px;font-family:'DM Mono',monospace;font-size:.6rem;font-weight:500;padding:1px 5px;border-radius:2px;letter-spacing:.04em;z-index:2;}
-.ft-lp{background:rgba(61,186,126,.85);color:#0c2016;}
-.ft-7{background:rgba(74,158,255,.85);color:#02162e;}
-.ft-12{background:rgba(200,169,110,.85);color:#2a1e05;}
-.ft-oth{background:rgba(122,120,112,.85);color:#1a1a18;}
-.sp-tag{position:absolute;top:6px;left:6px;font-family:'DM Mono',monospace;font-size:.58rem;font-weight:500;padding:1px 5px;border-radius:2px;background:rgba(232,168,56,.85);color:#2a1e05;z-index:2;}
-.miss-tag{position:absolute;top:6px;left:6px;font-family:'DM Mono',monospace;font-size:.58rem;font-weight:500;padding:1px 5px;border-radius:2px;background:rgba(224,82,82,.85);color:#2a0505;z-index:2;}
-.status-bar{position:absolute;bottom:0;left:0;right:0;height:2px;z-index:2;}
-.card.owned .status-bar{background:var(--green);}
+.fmt-tag{position:absolute;top:6px;right:6px;font-family:'DM Mono',monospace;font-size:.6rem;font-weight:500;padding:1px 5px;border-radius:2px;letter-spacing:.04em;}
+.ft-lp {background:rgba(61,186,126,.2);color:var(--green);}
+.ft-7  {background:rgba(74,158,255,.2);color:var(--acc2);}
+.ft-12 {background:rgba(200,169,110,.2);color:var(--accent);}
+.ft-oth{background:rgba(122,120,112,.2);color:var(--muted);}
+.sp-tag{position:absolute;top:6px;left:6px;font-family:'DM Mono',monospace;font-size:.58rem;font-weight:500;padding:1px 5px;border-radius:2px;background:rgba(232,168,56,.2);color:var(--amber);}
+.miss-tag{position:absolute;top:6px;left:6px;font-family:'DM Mono',monospace;font-size:.58rem;font-weight:500;padding:1px 5px;border-radius:2px;background:rgba(224,82,82,.2);color:var(--red);}
+.status-bar{position:absolute;bottom:0;left:0;right:0;height:2px;}
+.card.owned  .status-bar{background:var(--green);}
 .card.missing .status-bar{background:var(--red);}
-/* Admin hide button */
-.hide-btn{display:none;position:absolute;top:6px;left:6px;width:22px;height:22px;background:rgba(224,82,82,.9);border:none;border-radius:3px;cursor:pointer;z-index:10;align-items:center;justify-content:center;font-size:13px;color:#fff;line-height:1;}
-.admin-mode .card:hover .hide-btn{display:flex;}
-.admin-mode .card:hover .miss-tag,
-.admin-mode .card:hover .sp-tag{display:none;}
-/* Restore bar */
-#restore-bar{display:none;background:rgba(224,82,82,.1);border-bottom:1px solid rgba(224,82,82,.3);padding:.6rem 2rem;align-items:center;gap:1rem;font-family:'DM Mono',monospace;font-size:.75rem;color:var(--red);}
-#restore-bar.visible{display:flex;}
+
 #admin-bar{display:none;background:var(--bg3);border-bottom:1px solid var(--accent);padding:.75rem 2rem;align-items:center;gap:1rem;flex-wrap:wrap;}
 #admin-bar.visible{display:flex;}
 #admin-bar span{font-family:'DM Mono',monospace;font-size:.75rem;color:var(--accent);}
@@ -73,7 +84,7 @@ select{background:var(--bg3);border:1px solid var(--line);color:var(--text);padd
 .btn:hover{background:var(--accent);color:var(--bg);}
 .btn.danger{border-color:var(--red);color:var(--red);}
 .btn.danger:hover{background:var(--red);color:#fff;}
-.btn.sm{padding:.25rem .6rem;font-size:.7rem;}
+
 #login-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);align-items:center;justify-content:center;z-index:100;}
 #login-modal.visible{display:flex;}
 .modal-box{background:var(--bg2);border:1px solid var(--line);padding:2rem;width:340px;border-radius:4px;}
@@ -83,31 +94,34 @@ select{background:var(--bg3);border:1px solid var(--line);color:var(--text);padd
 .modal-box input:focus{border-color:var(--accent);}
 .modal-row{display:flex;gap:.5rem;justify-content:flex-end;}
 .modal-err{font-family:'DM Mono',monospace;font-size:.72rem;color:var(--red);margin-bottom:.5rem;display:none;}
+
 footer{border-top:1px solid var(--line);padding:1.5rem 2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;}
 footer p{font-family:'DM Mono',monospace;font-size:.72rem;color:var(--muted);}
 footer a{color:var(--accent);text-decoration:none;}
 #login-btn{font-family:'DM Mono',monospace;font-size:.72rem;color:var(--muted);background:none;border:none;cursor:pointer;}
 #login-btn:hover{color:var(--accent);}
-.loading{padding:3rem 2rem;text-align:center;font-family:'DM Mono',monospace;font-size:.8rem;color:var(--muted);}
-@media(max-width:600px){header,.toolbar,.grid-wrap,footer{padding-left:1rem;padding-right:1rem;}.grid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr));}}
+
+@media(max-width:600px){
+  header,.toolbar,.grid-wrap,footer{padding-left:1rem;padding-right:1rem;}
+  .grid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr));}
+}
 </style>
 </head>
 <body>
+
 <header>
   <div class="logo"><span>VINYL COLLECTION</span>Oasis</div>
   <div class="header-meta"><strong id="total-count">—</strong>levyä kokoelmassa</div>
 </header>
+
 <div class="stats-bar" id="stats-bar"></div>
+
 <div id="admin-bar">
-  <span>⚡ Muokkaustila — klikkaa X piilottaaksesi kortin</span>
-  <button class="btn sm" onclick="showHidden()">Näytä piilotetut (<span id="hidden-count">0</span>)</button>
-  <button class="btn sm danger" onclick="adminLogout()">Kirjaudu ulos</button>
+  <span>⚡ Muokkaustila päällä</span>
+  <button class="btn" onclick="syncDiscogs()">↻ Synkronoi Discogs</button>
+  <button class="btn danger" onclick="adminLogout()">Kirjaudu ulos</button>
 </div>
-<div id="restore-bar">
-  <span id="restore-info"></span>
-  <button class="btn sm" onclick="restoreAll()">Palauta kaikki</button>
-  <button class="btn sm" onclick="hideRestoreBar()">Sulje</button>
-</div>
+
 <div class="toolbar">
   <div class="search-wrap"><input id="search" type="text" placeholder="Hae levyä..." autocomplete="off"></div>
   <select id="sort">
@@ -115,7 +129,7 @@ footer a{color:var(--accent);text-decoration:none;}
     <option value="title">Nimi A–Z</option>
     <option value="status">Omistaa ensin</option>
   </select>
-  <div class="tabs">
+  <div class="tabs" id="tabs">
     <button class="tab active" data-tab="all">Kaikki</button>
     <button class="tab" data-tab="owned">Omistaa</button>
     <button class="tab" data-tab="missing">Puuttuu</button>
@@ -125,11 +139,14 @@ footer a{color:var(--accent);text-decoration:none;}
     <button class="tab" data-tab="era">Aikakausi</button>
   </div>
 </div>
-<main class="grid-wrap" id="main"><div class="loading">Ladataan...</div></main>
+
+<main class="grid-wrap" id="main"></main>
+
 <footer>
-  <p>Päivitetty: <span id="updated">—</span> &nbsp;·&nbsp; <a href="https://www.discogs.com/user/freeal/collection" target="_blank">Discogs ↗</a></p>
+  <p>Päivitetty: <span id="updated">—</span> &nbsp;·&nbsp; <a href="https://www.discogs.com/user/freeal/collection" target="_blank">Discogs-profiili ↗</a></p>
   <button id="login-btn" onclick="showLogin()">⚙</button>
 </footer>
+
 <div id="login-modal">
   <div class="modal-box">
     <h2>Kirjaudu sisään</h2>
@@ -142,165 +159,273 @@ footer a{color:var(--accent);text-decoration:none;}
     </div>
   </div>
 </div>
+
 <script>
-const PASS_HASH='a47f54bef75b9dc8a00cd67cc3fb77e756b0c1a5c95f2048a5a9b0e14c5c2e7b';
-const LS_KEY='oasis_hidden_v1';
-let COL=null,DISC=null,TAB='all',isAdmin=false;
+const PASS_HASH = 'a47f54bef75b9dc8a00cd67cc3fb77e756b0c1a5c95f2048a5a9b0e14c5c2e7b';
 
-async function sha256(m){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(m));return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join('');}
+// Discogsin master-kuvat puuttuville — haetaan tunnetut thumbit suoraan
+const MASTER_THUMBS = {
+  52245:'https://i.discogs.com/M01MVCjf26Qlth9phByih-Snx-cFmF_lwpB_iW4dUkU/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTc1Nzk0/Ny0xMTU1NzkwNzA1/LmpwZWc.jpeg',
+  52324:'https://i.discogs.com/hypGbVx7sjyyx2v7jNEiy1Gn9PoydwGx2lAs3Tv6H_4/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEwNTAw/MjQ2LTE1MjEyOTMw/NzQtMjAzMS5qcGVn.jpeg',
+  52303:'https://i.discogs.com/lJVNs27hYZVR6U-HCldW-_dR18ho42SoaCJgETP83tw/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTc0OTI3/OS0xMTY4NTQwMzA2/LmpwZWc.jpeg',
+  52290:'https://i.discogs.com/9W10ijEorKl-93utk6Mmuag6EsL1mgfbYDoDk-QMLC0/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE0MzQ1/Njc4LTE1ODEyODk4/MjctMTYxOC5qcGVn.jpeg',
+  52243:'https://i.discogs.com/r9hwhskT23rZsp7fLZTGHRa9b-EHTnEjVx1Goxd_7JE/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTc3MTQy/MS0xNDE4MzU4OTE5/LTgwNDEuanBlZw.jpeg',
+  52255:'https://i.discogs.com/Dcp8pX5jHnkgWGO1jfHX8p5CdzbUAww0Q4BpSA21v2A/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTUwNzM5/MTUtMTQ2NzgxNzEz/Ni00MTYwLmpwZWc.jpeg',
+  52351:'https://i.discogs.com/00May1XdtjWEHrnVMTr8QS3feKaWlkP1bXdnnWcM7TU/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTExNzYy/OTI2LTE1MjE5NTI4/MjEtNzI3OS5qcGVn.jpeg',
+  1791077:'https://i.discogs.com/CVKnUabuZbu1uk4aYdizfRI-AyH4QFxFialbDMdSTik/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI2NDU0/NzAtMTU0MzcwMTAx/OS0zODM4LmpwZWc.jpeg',
+  52220:'https://i.discogs.com/o4q7NAabsAQ_YD9l8FHYyYtV0QYs3wrr4YOWN1SbLdk/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM3MTM0/MS0xNzM1NzY1MTM0/LTIxMzUuanBlZw.jpeg',
+  52302:'https://i.discogs.com/Zfd_pPMGvufs9kAjj4YzpRngkD5Ul9e9G_m-lDZFuyw/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTU2MDcy/My0xMjgzNDY5ODkx/LmpwZWc.jpeg',
+  52304:'https://i.discogs.com/o5J_WTph9Eri4cV30MhJruIYpPzolIASsQkdCIGULs0/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTQ0Njc4/MC0xNDE4NTAwMDkx/LTI0MzEuanBlZw.jpeg',
+  52366:'https://i.discogs.com/y2UhRAv4hVXhoi0d5kyVnxf9JO5GaXklyqqcwP2VDWA/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTc5MzI1/MS0xNDE4NTAzOTQz/LTQ0NzUuanBlZw.jpeg',
+  52246:'https://i.discogs.com/oeZEhgh4JVEKnY3gx-UxlFhHqmE3iV_fgcSC4b0MSuY/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTc4NjMw/MC0xNzI0ODMwNTI2/LTE4MzUuanBlZw.jpeg',
+  345613:'https://i.discogs.com/jCLQE2oSnKQsxoGrIJL-3dZjOa0ymrdVbuxApGtG7tI/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE4OTc3/MzEtMTI2MTQwNzA5/OC5qcGVn.jpeg',
+  157318:'https://i.discogs.com/WoqCaXuXYBrqmBuR4CyPeNIlZOkfLWE66Vb6trPcPmU/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE4MDUy/NDEtMTYxNjcwODg1/MC0zMzk2LmpwZWc.jpeg',
+  52267:'https://i.discogs.com/8WH5Yi3PThDS5wVtZTM0u09QRvB1_HJoehBR0iH4dbQ/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTU3Njcx/Ni0xNTY1OTUzNDI4/LTYwNzQuanBlZw.jpeg',
+  52242:'https://i.discogs.com/yv3GQm3zt1ajPoEu9nsfJ74mytdGenRJGzMDGNXrf7Y/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTc4MDI2/NS0xNjE2NzA5MDQy/LTY3MTEuanBlZw.jpeg',
+  52250:'https://i.discogs.com/TOvzbETAIIbZaFm5qTWRVLCFx4EpOp7DlqXdblI3GYU/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM4MTcy/MS0xNDU4OTIxNDcz/LTg5MjIuanBlZw.jpeg',
+  52311:'https://i.discogs.com/XoLEvFfk-XUO4ZMqx6riwKAgwBR7VdPQZ5rFc1PyBqc/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTY4NDEw/OC0xNDU4MjEyODY3/LTE0MzIuanBlZw.jpeg',
+  52240:'https://i.discogs.com/uOyPDYz31VXlDvbQcamJkORxc9PlCGKWX6tQ5iX4eA0/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTYwMjIx/OTMtMTQwOTA2Mjg4/My0yMDIyLmpwZWc.jpeg',
+  52266:'https://i.discogs.com/sMF2kAuJDWf4tuMZh-EjsBMwuzuZTMfzIw4D_RNR6No/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE2MzUz/MTktMTIzMzYwNDUz/Ni5qcGVn.jpeg',
+  1007537:'https://i.discogs.com/U24Q-_TLsox16mv-MTEU0-opKkWgyvJmF58W2wOOrI8/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMwNjc5/MzctMTMxNDIwMDEw/Ni5qcGVn.jpeg',
+  52236:'https://i.discogs.com/B90jHtGWDD-tWuJG2frXAGK3e_YDI9Q4X0wD4w5VbAI/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEwMTc2/NDQtMTQxODM1ODQ5/MS00NDk5LmpwZWc.jpeg',
+  52344:'https://i.discogs.com/NvuYPb09UK-Dh_t0lZMIU9YW2aFTb_T9r5hd1Kwh9jg/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEzNDIz/NDctMTIxMjc2OTgz/NS5qcGVn.jpeg',
+  52275:'https://i.discogs.com/aTN8L3TyIcxEN854X31olv9rAwj2StVt_QyMmd_DijI/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTU5NTU4/NC0xMjg4MTIzMzE4/LmpwZWc.jpeg',
+  52313:'https://i.discogs.com/aBTou38uCMKGoREFF9zFjE2-f4V5UwOpbJg4qy3dBw0/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTQ5NTM3/MTAtMTM4MDQ1Mjk4/MC02MTAxLmpwZWc.jpeg',
+  52322:'https://i.discogs.com/rbASAGV1U4RTKqNPJqUO9oX0K6WFxAlnsx-7qzR6lgc/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEwMDk1/NTEtMTIxOTY3ODM5/OS5qcGVn.jpeg',
+  52374:'https://i.discogs.com/x953M19IwpkmNsBgAKpdlCoPpapI0DgKGhT6nQsHoYg/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTQyNTM4/NjItMTM1OTgyMTE0/NC0yMzIyLmpwZWc.jpeg',
+  52271:'https://i.discogs.com/bp9fYPLxWKWByFN6gjzAkMBMoejEduVZ8w1PEbMcOsk/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM4Mjg2/OS0xNjA2MjE1MTA2/LTgyMjEuanBlZw.jpeg',
+  52277:'https://i.discogs.com/Ii8gxxxhw57TRAx_l1u5YIbg8Ft7iSx6JArckW8YKFs/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTY0MjQ0/NDMtMTQxODg4MjQ2/MS00MDk1LmpwZWc.jpeg',
+  52332:'https://i.discogs.com/lLy0zspNRvxTTIsmzZs5aW6slyBXIy6SB-NJR8DBf1s/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEwOTYy/ODYtMTYxNjcwOTQx/OC00MTAwLmpwZWc.jpeg',
+  52316:'https://i.discogs.com/X7Auy-4D0RIgz12VaUBOgJFaP8vM5CE4m5h63Ke8Leg/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE1MDc2/ODctMTIyNDg3MTQ2/Mi5qcGVn.jpeg',
+  52286:'https://i.discogs.com/k9WrXyAA5gZCsoI4Uz1Tyy7u1uxZAkWeW3ay9LkfE94/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI2MTIy/MjctMTU2MDY5MDkw/MC02Mjk4LmpwZWc.jpeg',
+  52308:'https://i.discogs.com/1PYFRvN0POZpRnDP1-Xgbw6-mf1f4JX4ivK7dwDDoWY/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI2MTIy/MjQtMTI5MzE3NDM0/MS5qcGVn.jpeg',
+  52262:'https://i.discogs.com/GJkB9CLhK2OBEvr0Cavoo2Sh_4DYN-OQFLekhNha9BU/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTU4OTcx/MS0xNDM4NTEwMzEx/LTk5NTQuanBlZw.jpeg',
+  52291:'https://i.discogs.com/PpthTTfzQDb42d54aIYl__yNuPIvnjdELmUQajDJBac/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE0MzY0/NjAtMTIxOTY3NzA0/My5qcGVn.jpeg',
+  52336:'https://i.discogs.com/GSPgd3FmcyeL2taAchQ3clxh7kHePhq8tf_ko4GeHIk/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEwNzY5/MjMtMTM5NjgyNDk0/Mi0yMDc3LmpwZWc.jpeg',
+  52283:'https://i.discogs.com/7_Mpk9UTZnMh_ewXg3cWxJSfLEXroKxfmiqOCt00Ai4/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTExMTk2/NTEtMTE5MzU3OTU5/NC5qcGVn.jpeg',
+  52317:'https://i.discogs.com/Roe-LTxfVxoKQb9nD1PLR9sGn6bpmpxO0qkXRPAL-q4/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE3OTAx/MjMtMTI5NjczMzI1/Ny5qcGVn.jpeg',
+  52257:'https://i.discogs.com/b_iJ9nEs1E29ZUTXz3biMXsnDCq6bPgi-1vRX94Cfhk/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE1ODg4/MDctMTI0MjMxODY3/Ny5qcGVn.jpeg',
+  52358:'https://i.discogs.com/n_g8KHGisHkF3lFNQA1sSqz8FT3qq2PZSE09nULO810/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE0NzU4/MTgtMTIyMjUzODE2/My5qcGVn.jpeg',
+  52278:'https://i.discogs.com/av1a89XwOa_LNAvnrpm0m6whBRBxufLZif3Y5B9Xku0/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE1NTk5/MjItMTIyODQxMDAx/Mi5qcGVn.jpeg',
+  52270:'https://i.discogs.com/hBgBFWgl7eK9GhQzck53Xk2049HDXDRRWLlW7V_obtU/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE2ODcx/NDktMTI5MTUxNDMz/Ni5qcGVn.jpeg',
+  254937:'https://i.discogs.com/z8i19es5h3xgo2ivoh6T1gmay2ADVPoX-O84fSNCgZc/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMwNTE4/MTItMTUwNTc1ODE2/NS05MTQ2LmpwZWc.jpeg',
+  2388514:'https://i.discogs.com/5kGi-JY7r-cNGIwd8AttNjEO7b09dyqrDbQvh1PdKZI/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTIxMDU2/MzM4LTE2Mzc1NDU2/MzItNTU1MC5qcGVn.jpeg',
+  399989:'https://i.discogs.com/XJGhoswsQETGuh3EJvmFnITzxe0d5EOCJ2TibrcxdKA/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMzMzA5/NjgtMTQ5MDYzOTcx/Ny0yNjE5LmpwZWc.jpeg',
+};
 
-function getHidden(){try{return new Set(JSON.parse(localStorage.getItem(LS_KEY)||'[]'));}catch{return new Set();}}
-function saveHidden(s){localStorage.setItem(LS_KEY,JSON.stringify([...s]));}
-function hideItem(mid){const h=getHidden();h.add(String(mid));saveHidden(h);updateHiddenCount();render();}
-function restoreAll(){saveHidden(new Set());updateHiddenCount();hideRestoreBar();render();}
-function updateHiddenCount(){
-  const n=getHidden().size;
-  document.getElementById('hidden-count').textContent=n;
+const DISCOGRAPHY = [
+  {mid:52245,title:"Columbia",year:1993,fmt:"7\"",label:"Creation"},
+  {mid:52324,title:"Supersonic",year:1994,fmt:"7\"",label:"Creation"},
+  {mid:52303,title:"Shakermaker",year:1994,fmt:"7\"",label:"Creation"},
+  {mid:52290,title:"Live Forever",year:1994,fmt:"7\"",label:"Creation"},
+  {mid:52243,title:"Cigarettes & Alcohol",year:1994,fmt:"7\"",label:"Creation"},
+  {mid:52255,title:"Definitely Maybe",year:1994,fmt:"2xLP",label:"Creation"},
+  {mid:52351,title:"Whatever",year:1994,fmt:"7\"",label:"Creation"},
+  {mid:1791077,title:"I Am The Walrus",year:1994,fmt:"7\"",label:"Creation"},
+  {mid:52220,title:"(What's The Story) Morning Glory?",year:1995,fmt:"2xLP",label:"Creation"},
+  {mid:52302,title:"Roll With It",year:1995,fmt:"7\"",label:"Creation"},
+  {mid:52304,title:"Some Might Say",year:1995,fmt:"7\"",label:"Creation"},
+  {mid:52366,title:"Wonderwall",year:1995,fmt:"7\"",label:"Creation"},
+  {mid:52246,title:"Cum On Feel The Noize",year:1995,fmt:"7\"",label:"Creation"},
+  {mid:345613,title:"Acquiesce",year:1995,fmt:"7\"",label:"Creation"},
+  {mid:157318,title:"Morning Glory",year:1995,fmt:"7\"",label:"Creation"},
+  {mid:52267,title:"Don't Look Back In Anger",year:1995,fmt:"7\"",label:"Creation"},
+  {mid:52242,title:"Champagne Supernova",year:1996,fmt:"7\"",label:"Creation"},
+  {mid:52250,title:"D'You Know What I Mean?",year:1997,fmt:"7\"",label:"Creation"},
+  {mid:52311,title:"Stand By Me",year:1997,fmt:"7\"",label:"Creation"},
+  {mid:52240,title:"Be Here Now",year:1997,fmt:"2xLP",label:"Creation"},
+  {mid:52266,title:"Don't Go Away",year:1997,fmt:"7\"",label:"Creation"},
+  {mid:1007537,title:"I Hope, I Think, I Know",year:1997,fmt:"7\"",label:"Creation"},
+  {mid:52236,title:"All Around The World",year:1997,fmt:"7\"",label:"Creation"},
+  {mid:52344,title:"The Masterplan",year:1998,fmt:"2xLP",label:"Creation"},
+  {mid:52275,title:"Go Let It Out",year:1999,fmt:"7\"",label:"Big Brother"},
+  {mid:52313,title:"Standing On The Shoulder Of Giants",year:2000,fmt:"LP",label:"Big Brother"},
+  {mid:52322,title:"Sunday Morning Call",year:2000,fmt:"7\"",label:"Big Brother"},
+  {mid:52374,title:"Who Feels Love?",year:2000,fmt:"7\"",label:"Big Brother"},
+  {mid:399989,title:"Where Did It All Go Wrong?",year:2000,fmt:"7\"",label:"Big Brother"},
+  {mid:52271,title:"Familiar To Millions",year:2000,fmt:"3xLP",label:"Big Brother"},
+  {mid:52277,title:"Heathen Chemistry",year:2002,fmt:"2xLP",label:"Big Brother"},
+  {mid:52332,title:"The Hindu Times",year:2002,fmt:"7\"",label:"Big Brother"},
+  {mid:52316,title:"Stop Crying Your Heart Out",year:2002,fmt:"7\"",label:"Big Brother"},
+  {mid:52286,title:"Little By Little",year:2002,fmt:"7\"",label:"Big Brother"},
+  {mid:52308,title:"Songbird",year:2002,fmt:"7\"",label:"Big Brother"},
+  {mid:52262,title:"Don't Believe The Truth",year:2005,fmt:"LP",label:"Big Brother"},
+  {mid:52291,title:"Lyla",year:2005,fmt:"7\"",label:"Big Brother"},
+  {mid:52336,title:"The Importance Of Being Idle",year:2005,fmt:"7\"",label:"Big Brother"},
+  {mid:52283,title:"Let There Be Love",year:2005,fmt:"10\"",label:"Big Brother"},
+  {mid:52317,title:"Stop The Clocks",year:2006,fmt:"2xLP",label:"Big Brother"},
+  {mid:52257,title:"Dig Out Your Soul",year:2008,fmt:"2xLP",label:"Big Brother"},
+  {mid:52358,title:"The Shock Of The Lightning",year:2008,fmt:"7\"",label:"Big Brother"},
+  {mid:52278,title:"I'm Outta Time",year:2008,fmt:"7\"",label:"Big Brother"},
+  {mid:52270,title:"Falling Down",year:2008,fmt:"7\"",label:"Big Brother"},
+  {mid:254937,title:"Time Flies... 1994–2009",year:2010,fmt:"2xLP",label:"Big Brother"},
+  {mid:2388514,title:"Knebworth 1996",year:2021,fmt:"3xLP",label:"Big Brother"},
+];
+
+let DATA = null;
+let currentTab = 'all';
+
+async function sha256(msg) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(msg));
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
 }
-function showHidden(){
-  const h=getHidden();
-  if(h.size===0){alert('Ei piilotettuja julkaisuja.');return;}
-  const hidden=buildAll().filter(i=>h.has(String(i.master_id||i.mid)));
-  document.getElementById('restore-info').textContent=`Piilotettu ${h.size} julkaisua: `+hidden.slice(0,3).map(i=>i.title).join(', ')+(hidden.length>3?'...':'');
-  document.getElementById('restore-bar').classList.add('visible');
-}
-function hideRestoreBar(){document.getElementById('restore-bar').classList.remove('visible');}
 
-async function load(){
-  try{
-    const [cr,dr]=await Promise.all([
-      fetch('data/collection.json?v='+Date.now()).then(r=>r.json()),
-      fetch('data/discography.json?v='+Date.now()).then(r=>r.json())
-    ]);
-    COL=cr;DISC=dr;
-    document.getElementById('total-count').textContent=COL.meta.total;
-    document.getElementById('updated').textContent=COL.meta.updated;
-    updateHiddenCount();
-    stats();render();
-  }catch(e){
-    document.getElementById('main').innerHTML='<p class="loading">Virhe ladattaessa dataa.</p>';
+async function loadData() {
+  try {
+    const r = await fetch('data/collection.json?v='+Date.now());
+    DATA = await r.json();
+    document.getElementById('total-count').textContent = DATA.meta.total;
+    document.getElementById('updated').textContent = DATA.meta.updated;
+    renderStats();
+    render();
+  } catch(e) {
+    document.getElementById('main').innerHTML = '<p style="padding:2rem;color:var(--muted);font-family:monospace">Virhe ladattaessa dataa.</p>';
   }
 }
 
-function owned(){return COL?COL.owned:[];}
-function discography(){return DISC?DISC.releases:[];}
+function getOwned() { return DATA ? DATA.owned : []; }
 
-function buildAll(){
-  const hidden=getHidden();
-  const om=new Set(owned().map(o=>o.master_id));
-  const missing=discography()
-    .filter(d=>!om.has(d.mid)&&!hidden.has(String(d.mid)))
-    .map(d=>({id:d.mid,master_id:d.mid,title:d.title,year:d.year,format:d.fmt,label:d.label,thumb:d.thumb,catalog:'',status:'missing'}));
-  return[
-    ...owned().filter(o=>!hidden.has(String(o.master_id))).map(o=>({...o,status:'owned'})),
+function buildAll() {
+  const owned = getOwned();
+  const ownedMids = new Set(owned.map(o => o.master_id));
+  const missing = DISCOGRAPHY
+    .filter(d => !ownedMids.has(d.mid))
+    .map(d => ({
+      ...d,
+      id: d.mid,
+      master_id: d.mid,
+      format: d.fmt,
+      status: 'missing',
+      thumb: MASTER_THUMBS[d.mid] || ''
+    }));
+  return [
+    ...owned.map(o => ({...o, status:'owned'})),
     ...missing
   ];
 }
 
-function fc(f){if(!f)return'oth';if(f.includes('LP')||f.includes('xLP'))return'lp';if(f.startsWith('7'))return's7';if(f.startsWith('12'))return's12';return'oth';}
-const FT={lp:'ft-lp',s7:'ft-7',s12:'ft-12',oth:'ft-oth'};
-function era(y){if(y<=1996)return'Creation era (1994–96)';if(y<=1999)return'Late Creation (1997–99)';if(y<=2005)return'Big Brother era (2000–05)';if(y<=2009)return'Dig Out era (2006–09)';return'Reissues & uudet (2010–)';}
-function durl(i){return i.status==='missing'?`https://www.discogs.com/master/${i.master_id}`:`https://www.discogs.com/release/${i.id}`;}
+function fmtClass(fmt) {
+  if (!fmt) return 'oth';
+  if (fmt.includes('LP')||fmt.includes('xLP')) return 'lp';
+  if (fmt.startsWith('7')) return 's7';
+  if (fmt.startsWith('12')) return 's12';
+  return 'oth';
+}
+const FTC = {lp:'ft-lp',s7:'ft-7',s12:'ft-12',oth:'ft-oth'};
 
-function card(i){
-  const c=fc(i.format||'');
-  const fl=(i.format||'?').replace('xLP','×LP');
-  const svg=`<svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" stroke="#fff" stroke-width="1.5" fill="none"/><circle cx="20" cy="20" r="4" fill="#fff"/></svg>`;
-  const img=i.thumb?`<img src="${i.thumb}" loading="lazy" onerror="this.style.display='none'">`:'';
-  const badge=i.status==='missing'?`<span class="miss-tag">PUUTTUU</span>`:(i.special?`<span class="sp-tag">${i.special}</span>`:'');
-  const lbl=(i.label||'').split(',')[0].trim().slice(0,20);
-  const mid=i.master_id||i.mid||i.id;
-  const hideBtn=`<button class="hide-btn" onclick="event.preventDefault();event.stopPropagation();hideItem(${mid})" title="Piilota">✕</button>`;
-  return `<a class="card ${i.status}" href="${durl(i)}" target="_blank" rel="noopener">
-    <div class="card-img-wrap">${svg}${img}</div>
-    ${badge}${hideBtn}
-    <span class="fmt-tag ${FT[c]||'ft-oth'}">${fl}</span>
-    <div class="status-bar"></div>
-    <div class="card-info">
-      <div class="card-title">${i.title}</div>
-      <div class="card-sub">${i.year||''} · ${lbl}</div>
-      ${i.catalog?`<div class="card-sub" style="opacity:.5">${i.catalog}</div>`:''}
-    </div></a>`;}
-
-function stats(){
-  if(!COL||!DISC)return;
-  const a=buildAll();
-  const ow=a.filter(i=>i.status==='owned').length;
-  const ms=a.filter(i=>i.status==='missing').length;
-  const lp=owned().filter(i=>(i.format||'').includes('LP')).length;
-  const sp=owned().filter(i=>i.special).length;
-  const p=Math.round(ow/(ow+ms)*100);
-  document.getElementById('stats-bar').innerHTML=`
-    <div class="stat-item"><div class="n g">${ow}</div><div class="l">Omistaa</div></div>
-    <div class="stat-item"><div class="n r">${ms}</div><div class="l">Puuttuu</div></div>
-    <div class="stat-item"><div class="n a">${p}%</div><div class="l">Kattavuus</div></div>
-    <div class="stat-item"><div class="n" style="color:var(--text)">${lp}</div><div class="l">LP:t</div></div>
-    <div class="stat-item"><div class="n" style="color:var(--amber)">${sp}</div><div class="l">Erikoiset</div></div>`;}
-
-function filtered(){
-  let it=buildAll();
-  const s=(document.getElementById('search').value||'').toLowerCase();
-  if(TAB==='owned')  it=it.filter(i=>i.status==='owned');
-  if(TAB==='missing')it=it.filter(i=>i.status==='missing');
-  if(TAB==='albums') it=it.filter(i=>(i.format||'').includes('LP'));
-  if(TAB==='singles')it=it.filter(i=>{const f=i.format||'';return f.startsWith('7')||f.startsWith('12')||f.startsWith('10');});
-  if(TAB==='special')it=it.filter(i=>i.special);
-  if(s)it=it.filter(i=>(i.title||'').toLowerCase().includes(s)||(i.catalog||'').toLowerCase().includes(s));
-  const sr=document.getElementById('sort').value;
-  if(sr==='year') it.sort((a,b)=>(a.year||0)-(b.year||0));
-  if(sr==='title')it.sort((a,b)=>(a.title||'').localeCompare(b.title||''));
-  if(sr==='status')it.sort((a,b)=>a.status==='owned'&&b.status==='missing'?-1:1);
-  return it;
+function era(y) {
+  if (y<=1996) return 'Creation era (1994–96)';
+  if (y<=1999) return 'Late Creation (1997–99)';
+  if (y<=2005) return 'Big Brother era (2000–05)';
+  if (y<=2009) return 'Dig Out era (2006–09)';
+  return 'Reissues & uudet (2010–)';
 }
 
-function render(){
-  if(!COL||!DISC)return;
-  stats();
-  const m=document.getElementById('main');
-  if(TAB==='era'){
-    let a=buildAll().sort((x,y)=>(x.year||0)-(y.year||0));
-    const s=(document.getElementById('search').value||'').toLowerCase();
-    if(s)a=a.filter(i=>(i.title||'').toLowerCase().includes(s));
-    const g={};
-    a.forEach(i=>{const e=era(i.year);if(!g[e])g[e]=[];g[e].push(i);});
-    const o=['Creation era (1994–96)','Late Creation (1997–99)','Big Brother era (2000–05)','Dig Out era (2006–09)','Reissues & uudet (2010–)'];
-    m.innerHTML=o.filter(k=>g[k]).map(k=>{
-      const ow=g[k].filter(i=>i.status==='owned').length;
-      const ms=g[k].filter(i=>i.status==='missing').length;
-      return`<div class="section-head">${k}<span class="chip chip-g">${ow} omistaa</span>${ms?`<span class="chip chip-r">${ms} puuttuu</span>`:''}</div><div class="grid">${g[k].map(card).join('')}</div>`;
+function discUrl(item) {
+  if (item.status==='missing') return `https://www.discogs.com/master/${item.master_id}`;
+  return `https://www.discogs.com/release/${item.id}`;
+}
+
+function cardHTML(item) {
+  const fc = fmtClass(item.format||item.fmt||'');
+  const fl = (item.format||item.fmt||'?').replace('xLP','×LP');
+  const imgEl = item.thumb
+    ? `<img src="${item.thumb}" loading="lazy" onerror="this.outerHTML='<div class=\\"card-placeholder\\"><svg width=40 height=40 viewBox=\\"0 0 40 40\\"><circle cx=20 cy=20 r=18 stroke=\\"#fff\\" stroke-width=1.5 fill=none/><circle cx=20 cy=20 r=4 fill=\\"#fff\\"/></svg></div>'">`
+    : `<div class="card-placeholder"><svg width=40 height=40 viewBox="0 0 40 40"><circle cx=20 cy=20 r=18 stroke="#fff" stroke-width=1.5 fill=none/><circle cx=20 cy=20 r=4 fill="#fff"/></svg></div>`;
+  const badge = item.status==='missing'
+    ? `<span class="miss-tag">PUUTTUU</span>`
+    : (item.special ? `<span class="sp-tag">${item.special}</span>` : '');
+  const lbl = (item.label||'').split(',')[0].trim().slice(0,20);
+  return `<a class="card ${item.status}" href="${discUrl(item)}" target="_blank" rel="noopener">
+    ${imgEl}
+    ${badge}
+    <span class="fmt-tag ${FTC[fc]||'ft-oth'}">${fl}</span>
+    <div class="status-bar"></div>
+    <div class="card-info">
+      <div class="card-title">${item.title}</div>
+      <div class="card-sub">${item.year||''} · ${lbl}</div>
+      ${item.catalog?`<div class="card-sub" style="opacity:.55">${item.catalog}</div>`:''}
+    </div>
+  </a>`;
+}
+
+function renderStats() {
+  const all = buildAll();
+  const own = all.filter(i=>i.status==='owned').length;
+  const mis = all.filter(i=>i.status==='missing').length;
+  const lps = getOwned().filter(i=>(i.format||'').includes('LP')).length;
+  const sp  = getOwned().filter(i=>i.special).length;
+  const pct = Math.round(own/(own+mis)*100);
+  document.getElementById('stats-bar').innerHTML = `
+    <div class="stat-item"><div class="n g">${own}</div><div class="l">Omistaa</div></div>
+    <div class="stat-item"><div class="n r">${mis}</div><div class="l">Puuttuu</div></div>
+    <div class="stat-item"><div class="n a">${pct}%</div><div class="l">Kattavuus</div></div>
+    <div class="stat-item"><div class="n" style="color:var(--text)">${lps}</div><div class="l">LP:t</div></div>
+    <div class="stat-item"><div class="n" style="color:var(--amber)">${sp}</div><div class="l">Erikoiset</div></div>`;
+}
+
+function getFiltered() {
+  let items = buildAll();
+  const s = (document.getElementById('search').value||'').toLowerCase();
+  if (currentTab==='owned')   items=items.filter(i=>i.status==='owned');
+  if (currentTab==='missing') items=items.filter(i=>i.status==='missing');
+  if (currentTab==='albums')  items=items.filter(i=>(i.format||i.fmt||'').includes('LP'));
+  if (currentTab==='singles') items=items.filter(i=>{const f=i.format||i.fmt||'';return f.startsWith('7')||f.startsWith('12')||f.startsWith('10');});
+  if (currentTab==='special') items=items.filter(i=>i.special);
+  if (s) items=items.filter(i=>(i.title||'').toLowerCase().includes(s)||(i.catalog||'').toLowerCase().includes(s));
+  const srt=document.getElementById('sort').value;
+  if (srt==='year')   items.sort((a,b)=>(a.year||0)-(b.year||0));
+  if (srt==='title')  items.sort((a,b)=>(a.title||'').localeCompare(b.title||''));
+  if (srt==='status') items.sort((a,b)=>a.status==='owned'&&b.status==='missing'?-1:1);
+  return items;
+}
+
+function render() {
+  if (!DATA) return;
+  const main = document.getElementById('main');
+  if (currentTab==='era') {
+    let all = buildAll().sort((a,b)=>(a.year||0)-(b.year||0));
+    const s = (document.getElementById('search').value||'').toLowerCase();
+    if (s) all=all.filter(i=>(i.title||'').toLowerCase().includes(s));
+    const groups={};
+    all.forEach(i=>{const e=era(i.year);if(!groups[e])groups[e]=[];groups[e].push(i);});
+    const order=['Creation era (1994–96)','Late Creation (1997–99)','Big Brother era (2000–05)','Dig Out era (2006–09)','Reissues & uudet (2010–)'];
+    main.innerHTML=order.filter(k=>groups[k]).map(k=>{
+      const ow=groups[k].filter(i=>i.status==='owned').length;
+      const ms=groups[k].filter(i=>i.status==='missing').length;
+      return `<div class="section-head">${k}<span class="chip chip-g">${ow} omistaa</span>${ms?`<span class="chip chip-r">${ms} puuttuu</span>`:''}</div><div class="grid">${groups[k].map(cardHTML).join('')}</div>`;
     }).join('');
     return;
   }
-  const it=filtered();
-  m.innerHTML=it.length?`<div class="grid">${it.map(card).join('')}</div>`:`<p class="loading">Ei tuloksia.</p>`;}
+  const items=getFiltered();
+  main.innerHTML=items.length
+    ?`<div class="grid">${items.map(cardHTML).join('')}</div>`
+    :`<p style="padding:2rem;color:var(--muted);font-family:monospace">Ei tuloksia.</p>`;
+}
 
 function showLogin(){document.getElementById('login-modal').classList.add('visible');document.getElementById('pwd-input').focus();}
 function hideLogin(){document.getElementById('login-modal').classList.remove('visible');document.getElementById('login-err').style.display='none';}
 async function doLogin(){
-  const h=await sha256(document.getElementById('pwd-input').value);
-  if(h===PASS_HASH){
-    isAdmin=true;sessionStorage.setItem('admin','1');
+  const hash=await sha256(document.getElementById('pwd-input').value);
+  if(hash===PASS_HASH){
+    sessionStorage.setItem('admin','1');
     document.getElementById('admin-bar').classList.add('visible');
-    document.body.classList.add('admin-mode');
     hideLogin();document.getElementById('pwd-input').value='';
-  }else{document.getElementById('login-err').style.display='block';}}
-function adminLogout(){
-  isAdmin=false;sessionStorage.removeItem('admin');
-  document.getElementById('admin-bar').classList.remove('visible');
-  document.body.classList.remove('admin-mode');}
+  } else {document.getElementById('login-err').style.display='block';}
+}
+function adminLogout(){sessionStorage.removeItem('admin');document.getElementById('admin-bar').classList.remove('visible');}
+function syncDiscogs(){alert('Aja terminaalissa:\n\npython3 update.py SINUN_TOKEN\ngit add data/collection.json\ngit commit -m "Päivitä kokoelma"\ngit push');}
 
-document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
-  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
-  t.classList.add('active');TAB=t.dataset.tab;render();
-}));
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');currentTab=t.dataset.tab;render();
+  });
+});
 document.getElementById('search').addEventListener('input',render);
 document.getElementById('sort').addEventListener('change',render);
-if(sessionStorage.getItem('admin')){
-  isAdmin=true;
-  document.getElementById('admin-bar').classList.add('visible');
-  document.body.classList.add('admin-mode');
-}
-load();
+if(sessionStorage.getItem('admin')){document.getElementById('admin-bar').classList.add('visible');}
+loadData();
 </script>
 </body>
 </html>
