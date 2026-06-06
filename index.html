@@ -38,7 +38,7 @@ select{background:var(--bg3);border:1px solid var(--line);color:var(--text);padd
 .chip-g{background:rgba(61,186,126,.15);color:var(--green);}
 .chip-r{background:rgba(224,82,82,.15);color:var(--red);}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:1px;background:var(--line);}
-.card{background:var(--bg2);position:relative;overflow:hidden;display:block;text-decoration:none;color:inherit;cursor:pointer;}
+.card{background:var(--bg2);position:relative;overflow:hidden;display:block;text-decoration:none;color:inherit;}
 .card.missing{opacity:.6;}
 .card-img-wrap{width:100%;aspect-ratio:1/1;overflow:hidden;position:relative;background:var(--bg3);}
 .card-img-wrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.9);}
@@ -58,6 +58,14 @@ select{background:var(--bg3);border:1px solid var(--line);color:var(--text);padd
 .status-bar{position:absolute;bottom:0;left:0;right:0;height:2px;z-index:2;}
 .card.owned .status-bar{background:var(--green);}
 .card.missing .status-bar{background:var(--red);}
+/* Admin hide button */
+.hide-btn{display:none;position:absolute;top:6px;left:6px;width:22px;height:22px;background:rgba(224,82,82,.9);border:none;border-radius:3px;cursor:pointer;z-index:10;align-items:center;justify-content:center;font-size:13px;color:#fff;line-height:1;}
+.admin-mode .card:hover .hide-btn{display:flex;}
+.admin-mode .card:hover .miss-tag,
+.admin-mode .card:hover .sp-tag{display:none;}
+/* Restore bar */
+#restore-bar{display:none;background:rgba(224,82,82,.1);border-bottom:1px solid rgba(224,82,82,.3);padding:.6rem 2rem;align-items:center;gap:1rem;font-family:'DM Mono',monospace;font-size:.75rem;color:var(--red);}
+#restore-bar.visible{display:flex;}
 #admin-bar{display:none;background:var(--bg3);border-bottom:1px solid var(--accent);padding:.75rem 2rem;align-items:center;gap:1rem;flex-wrap:wrap;}
 #admin-bar.visible{display:flex;}
 #admin-bar span{font-family:'DM Mono',monospace;font-size:.75rem;color:var(--accent);}
@@ -65,6 +73,7 @@ select{background:var(--bg3);border:1px solid var(--line);color:var(--text);padd
 .btn:hover{background:var(--accent);color:var(--bg);}
 .btn.danger{border-color:var(--red);color:var(--red);}
 .btn.danger:hover{background:var(--red);color:#fff;}
+.btn.sm{padding:.25rem .6rem;font-size:.7rem;}
 #login-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);align-items:center;justify-content:center;z-index:100;}
 #login-modal.visible{display:flex;}
 .modal-box{background:var(--bg2);border:1px solid var(--line);padding:2rem;width:340px;border-radius:4px;}
@@ -90,9 +99,14 @@ footer a{color:var(--accent);text-decoration:none;}
 </header>
 <div class="stats-bar" id="stats-bar"></div>
 <div id="admin-bar">
-  <span>⚡ Muokkaustila päällä</span>
-  <button class="btn" onclick="syncDiscogs()">↻ Synkronoi Discogs</button>
-  <button class="btn danger" onclick="adminLogout()">Kirjaudu ulos</button>
+  <span>⚡ Muokkaustila — klikkaa X piilottaaksesi kortin</span>
+  <button class="btn sm" onclick="showHidden()">Näytä piilotetut (<span id="hidden-count">0</span>)</button>
+  <button class="btn sm danger" onclick="adminLogout()">Kirjaudu ulos</button>
+</div>
+<div id="restore-bar">
+  <span id="restore-info"></span>
+  <button class="btn sm" onclick="restoreAll()">Palauta kaikki</button>
+  <button class="btn sm" onclick="hideRestoreBar()">Sulje</button>
 </div>
 <div class="toolbar">
   <div class="search-wrap"><input id="search" type="text" placeholder="Hae levyä..." autocomplete="off"></div>
@@ -130,9 +144,27 @@ footer a{color:var(--accent);text-decoration:none;}
 </div>
 <script>
 const PASS_HASH='a47f54bef75b9dc8a00cd67cc3fb77e756b0c1a5c95f2048a5a9b0e14c5c2e7b';
-let COL=null, DISC=null, TAB='all';
+const LS_KEY='oasis_hidden_v1';
+let COL=null,DISC=null,TAB='all',isAdmin=false;
 
 async function sha256(m){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(m));return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join('');}
+
+function getHidden(){try{return new Set(JSON.parse(localStorage.getItem(LS_KEY)||'[]'));}catch{return new Set();}}
+function saveHidden(s){localStorage.setItem(LS_KEY,JSON.stringify([...s]));}
+function hideItem(mid){const h=getHidden();h.add(String(mid));saveHidden(h);updateHiddenCount();render();}
+function restoreAll(){saveHidden(new Set());updateHiddenCount();hideRestoreBar();render();}
+function updateHiddenCount(){
+  const n=getHidden().size;
+  document.getElementById('hidden-count').textContent=n;
+}
+function showHidden(){
+  const h=getHidden();
+  if(h.size===0){alert('Ei piilotettuja julkaisuja.');return;}
+  const hidden=buildAll().filter(i=>h.has(String(i.master_id||i.mid)));
+  document.getElementById('restore-info').textContent=`Piilotettu ${h.size} julkaisua: `+hidden.slice(0,3).map(i=>i.title).join(', ')+(hidden.length>3?'...':'');
+  document.getElementById('restore-bar').classList.add('visible');
+}
+function hideRestoreBar(){document.getElementById('restore-bar').classList.remove('visible');}
 
 async function load(){
   try{
@@ -140,12 +172,13 @@ async function load(){
       fetch('data/collection.json?v='+Date.now()).then(r=>r.json()),
       fetch('data/discography.json?v='+Date.now()).then(r=>r.json())
     ]);
-    COL=cr; DISC=dr;
+    COL=cr;DISC=dr;
     document.getElementById('total-count').textContent=COL.meta.total;
     document.getElementById('updated').textContent=COL.meta.updated;
-    stats(); render();
+    updateHiddenCount();
+    stats();render();
   }catch(e){
-    document.getElementById('main').innerHTML='<p class="loading">Virhe ladattaessa dataa. Varmista että olet ajanut update.py.</p>';
+    document.getElementById('main').innerHTML='<p class="loading">Virhe ladattaessa dataa.</p>';
   }
 }
 
@@ -153,17 +186,15 @@ function owned(){return COL?COL.owned:[];}
 function discography(){return DISC?DISC.releases:[];}
 
 function buildAll(){
+  const hidden=getHidden();
   const om=new Set(owned().map(o=>o.master_id));
   const missing=discography()
-    .filter(d=>!om.has(d.mid))
-    .map(d=>({
-      id:d.mid, master_id:d.mid,
-      title:d.title, year:d.year,
-      format:d.fmt, label:d.label,
-      thumb:d.thumb, catalog:'',
-      status:'missing'
-    }));
-  return[...owned().map(o=>({...o,status:'owned'})),...missing];
+    .filter(d=>!om.has(d.mid)&&!hidden.has(String(d.mid)))
+    .map(d=>({id:d.mid,master_id:d.mid,title:d.title,year:d.year,format:d.fmt,label:d.label,thumb:d.thumb,catalog:'',status:'missing'}));
+  return[
+    ...owned().filter(o=>!hidden.has(String(o.master_id))).map(o=>({...o,status:'owned'})),
+    ...missing
+  ];
 }
 
 function fc(f){if(!f)return'oth';if(f.includes('LP')||f.includes('xLP'))return'lp';if(f.startsWith('7'))return's7';if(f.startsWith('12'))return's12';return'oth';}
@@ -178,9 +209,12 @@ function card(i){
   const img=i.thumb?`<img src="${i.thumb}" loading="lazy" onerror="this.style.display='none'">`:'';
   const badge=i.status==='missing'?`<span class="miss-tag">PUUTTUU</span>`:(i.special?`<span class="sp-tag">${i.special}</span>`:'');
   const lbl=(i.label||'').split(',')[0].trim().slice(0,20);
+  const mid=i.master_id||i.mid||i.id;
+  const hideBtn=`<button class="hide-btn" onclick="event.preventDefault();event.stopPropagation();hideItem(${mid})" title="Piilota">✕</button>`;
   return `<a class="card ${i.status}" href="${durl(i)}" target="_blank" rel="noopener">
     <div class="card-img-wrap">${svg}${img}</div>
-    ${badge}<span class="fmt-tag ${FT[c]||'ft-oth'}">${fl}</span>
+    ${badge}${hideBtn}
+    <span class="fmt-tag ${FT[c]||'ft-oth'}">${fl}</span>
     <div class="status-bar"></div>
     <div class="card-info">
       <div class="card-title">${i.title}</div>
@@ -221,6 +255,7 @@ function filtered(){
 
 function render(){
   if(!COL||!DISC)return;
+  stats();
   const m=document.getElementById('main');
   if(TAB==='era'){
     let a=buildAll().sort((x,y)=>(x.year||0)-(y.year||0));
@@ -243,10 +278,16 @@ function showLogin(){document.getElementById('login-modal').classList.add('visib
 function hideLogin(){document.getElementById('login-modal').classList.remove('visible');document.getElementById('login-err').style.display='none';}
 async function doLogin(){
   const h=await sha256(document.getElementById('pwd-input').value);
-  if(h===PASS_HASH){sessionStorage.setItem('admin','1');document.getElementById('admin-bar').classList.add('visible');hideLogin();document.getElementById('pwd-input').value='';}
-  else{document.getElementById('login-err').style.display='block';}}
-function adminLogout(){sessionStorage.removeItem('admin');document.getElementById('admin-bar').classList.remove('visible');}
-function syncDiscogs(){alert('Aja terminaalissa:\n\npython3 update.py SINUN_TOKEN\ngit add data/\ngit commit -m "Päivitä kokoelma"\ngit push');}
+  if(h===PASS_HASH){
+    isAdmin=true;sessionStorage.setItem('admin','1');
+    document.getElementById('admin-bar').classList.add('visible');
+    document.body.classList.add('admin-mode');
+    hideLogin();document.getElementById('pwd-input').value='';
+  }else{document.getElementById('login-err').style.display='block';}}
+function adminLogout(){
+  isAdmin=false;sessionStorage.removeItem('admin');
+  document.getElementById('admin-bar').classList.remove('visible');
+  document.body.classList.remove('admin-mode');}
 
 document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
   document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
@@ -254,7 +295,11 @@ document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
 }));
 document.getElementById('search').addEventListener('input',render);
 document.getElementById('sort').addEventListener('change',render);
-if(sessionStorage.getItem('admin'))document.getElementById('admin-bar').classList.add('visible');
+if(sessionStorage.getItem('admin')){
+  isAdmin=true;
+  document.getElementById('admin-bar').classList.add('visible');
+  document.body.classList.add('admin-mode');
+}
 load();
 </script>
 </body>
