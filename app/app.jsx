@@ -110,7 +110,7 @@ function Cover({ r, editing, hidden, onOpen, onHide }) {
       </div>
       <div className="cmeta">
         <span className="cat">{r.cat}</span>
-        {r.completionTotal > 1 && <span className="comp-pill">{r.completionOwned}/{r.completionTotal}</span>}
+        {r.completionTotal > 1 && r.completionMissing > 0 && <span className="comp-pill">{r.completionOwned}/{r.completionTotal}</span>}
         <span className={"dot " + (r.owned ? "on" : "off")} />
       </div>
     </div>
@@ -128,7 +128,7 @@ function Row({ r, editing, hidden, onOpen, onHide }) {
       <div className="row-title">
         {r.title}
         {specialText(r) && <span className="row-special">{specialText(r)}</span>}
-        {r.completionTotal > 1 && <span className="row-completion">{r.completionOwned}/{r.completionTotal}</span>}
+        {r.completionTotal > 1 && r.completionMissing > 0 && <span className="row-completion">{r.completionOwned}/{r.completionTotal}</span>}
         <small>{TYPE_LABEL[r.type]} · {r.label}</small>
       </div>
       <div className="c fmt">{r.format}</div>

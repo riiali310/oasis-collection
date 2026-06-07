@@ -57,10 +57,12 @@ OFFICIAL_ALBUM_TITLES = {
     "be here now",
     "the masterplan",
     "standing on the shoulder of giants",
-    "familiar to millions",
     "heathen chemistry",
     "don t believe the truth",
     "dig out your soul",
+
+    # Official live / compilations
+    "familiar to millions",
     "stop the clocks",
     "time flies 1994 2009",
     "knebworth 1996",
@@ -87,6 +89,7 @@ OFFICIAL_SINGLE_TITLES = {
     "the hindu times",
     "stop crying your heart out",
     "little by little",
+    "little by little she is love",
     "songbird",
     "lyla",
     "the importance of being idle",
@@ -94,20 +97,21 @@ OFFICIAL_SINGLE_TITLES = {
     "lord don t slow me down",
     "the shock of the lightning",
     "i m outta time",
+    "i m outta time remixes",
     "falling down",
+    "falling down a monstrous psychedelic bubble exploding in your mind",
+
+    # Official / semi-official single-related releases
     "columbia",
     "acquiesce",
-    "little by little she is love",
-    "i m outta time remixes",
-    "falling down a monstrous psychedelic bubble exploding in your mind",
+    "i am the walrus",
+    "fuckin in the bushes",
 }
 
 OFFICIAL_SPECIAL_TITLES = {
     "5 tracks taken from the forthcoming album definitely maybe",
     "cum on feel the noize",
     "it s good to be free",
-    "i am the walrus",
-    "fuckin in the bushes",
     "wibbling rivalry",
     "live demonstration",
     "what s the story morning glory singles",
@@ -123,7 +127,48 @@ SPECIAL_WORDS = [
     "sampler",
     "advance",
     "demo",
+    "numbered",
+    "limited",
+    "ltd",
+    "box",
 ]
+
+EXCLUDE_WORDS = [
+    "bootleg",
+    "unofficial",
+    "radio broadcast",
+    "broadcast",
+    "fm broadcast",
+    "live at",
+    "live in",
+    "live by the sea",
+    "bbc radio",
+    "interview",
+    "documentary",
+    "tribute",
+    "karaoke",
+]
+
+
+def should_exclude(fmt, title, label=None, special=None):
+    f = (fmt or "").lower()
+    t = title_key(title)
+    l = (label or "").lower()
+    s = (special or "").lower()
+
+    combined = " ".join([f, t, l, s])
+
+    # Official exceptions first
+    if t in OFFICIAL_ALBUM_TITLES:
+        return False
+
+    if t in OFFICIAL_SINGLE_TITLES:
+        return False
+
+    if t in OFFICIAL_SPECIAL_TITLES:
+        return False
+
+    return any(word in combined for word in EXCLUDE_WORDS)
 
 
 def get_color(label, fmt):
@@ -147,12 +192,13 @@ def get_type(fmt, title, special=None, label=None):
     s = (special or "").lower()
     l = (label or "").lower()
 
-    combined = " ".join([f, s, l])
+    if should_exclude(fmt, title, label, special):
+        return None
 
+    combined = " ".join([f, s, l, t])
+
+    # Special first. A promo 12" is a special release, not a normal single.
     if any(word in combined for word in SPECIAL_WORDS):
-        return "special"
-
-    if "box" in f or "box" in t:
         return "special"
 
     if t in OFFICIAL_SPECIAL_TITLES:
@@ -164,6 +210,14 @@ def get_type(fmt, title, special=None, label=None):
     if t in OFFICIAL_SINGLE_TITLES:
         return "single"
 
+    # Format is only a fallback. It must not overrule collector logic.
+    if any(x in f for x in ['7"', '10"', '12"', "single", "cass", "cd"]):
+        return "single"
+
+    if any(x in f for x in ["lp", "2x", "3x", "album"]):
+        return "album"
+
+    # Unknown junk stays out.
     return None
 
 
