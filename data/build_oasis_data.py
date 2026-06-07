@@ -131,6 +131,7 @@ for o in col["owned"]:
 
     records.append({
         "id": f"release_{release_id}",
+        "release_id": release_id,
         "mid": master_id or release_id,
         "title": o.get("title", ""),
         "year": o.get("year") or 0,
@@ -162,6 +163,7 @@ for d in disc["releases"]:
 
     records.append({
         "id": f"missing_{mid}",
+        "release_id": None,
         "mid": mid,
         "title": d.get("title", ""),
         "year": d.get("year") or 0,
@@ -188,6 +190,7 @@ for r in records:
 
     lines.append(
         f'  {{ id:{json.dumps(r["id"])}, '
+        f'release_id:{json.dumps(r["release_id"])}, '
         f'mid:{json.dumps(r["mid"])}, '
         f'title:{json.dumps(r["title"])}, '
         f'year:{json.dumps(r["year"])}, '
