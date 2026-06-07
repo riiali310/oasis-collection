@@ -6,14 +6,14 @@ from datetime import datetime
 
 base = os.path.dirname(os.path.abspath(__file__))
 col_path = os.path.join(base, "collection.json")
-disc_path = os.path.join(base, "discography.json")
+want_path = os.path.join(base, "wantlist.json")
 out_path = os.path.join(base, "oasis-data.js")
 
 with open(col_path, encoding="utf-8") as f:
     col = json.load(f)
 
-with open(disc_path, encoding="utf-8") as f:
-    disc = json.load(f)
+with open(want_path, encoding="utf-8") as f:
+    want = json.load(f)
 
 LABEL_COLORS = {
     "creation": ["#8a5a34", "#1d1108"],
@@ -25,10 +25,14 @@ LABEL_COLORS = {
 
 FMT_COLORS = {
     '7"': ["#b5542c", "#1f120a"],
+    '10"': ["#5d4c6b", "#1a1420"],
     '12"': ["#403a4a", "#16131c"],
     "2xlp": ["#4a6b4f", "#16201a"],
     "lp": ["#6b5a34", "#1d1608"],
     "3xlp": ["#3a5a6b", "#10181f"],
+    "cass": ["#6b4f3a", "#1f1710"],
+    "cd": ["#6b6f63", "#20231d"],
+    "box": ["#60425f", "#1d121d"],
 }
 
 DEFAULT_COLOR = ["#6b5d49", "#1d1a14"]
@@ -60,8 +64,6 @@ OFFICIAL_ALBUM_TITLES = {
     "heathen chemistry",
     "don t believe the truth",
     "dig out your soul",
-
-    # Official live / compilations
     "familiar to millions",
     "stop the clocks",
     "time flies 1994 2009",
@@ -100,8 +102,6 @@ OFFICIAL_SINGLE_TITLES = {
     "i m outta time remixes",
     "falling down",
     "falling down a monstrous psychedelic bubble exploding in your mind",
-
-    # Official / semi-official single-related releases
     "columbia",
     "acquiesce",
     "i am the walrus",
@@ -115,12 +115,14 @@ OFFICIAL_SPECIAL_TITLES = {
     "wibbling rivalry",
     "live demonstration",
     "what s the story morning glory singles",
+    "dig out your soul 7 singles box set",
 }
 
 SPECIAL_WORDS = [
     "promo",
     "promotional",
     "white label",
+    "w/lbl",
     "test pressing",
     "test press",
     "acetate",
@@ -131,6 +133,7 @@ SPECIAL_WORDS = [
     "limited",
     "ltd",
     "box",
+    "s/sided",
 ]
 
 EXCLUDE_WORDS = [
@@ -150,27 +153,6 @@ EXCLUDE_WORDS = [
 ]
 
 
-def should_exclude(fmt, title, label=None, special=None):
-    f = (fmt or "").lower()
-    t = title_key(title)
-    l = (label or "").lower()
-    s = (special or "").lower()
-
-    combined = " ".join([f, t, l, s])
-
-    # Official exceptions first
-    if t in OFFICIAL_ALBUM_TITLES:
-        return False
-
-    if t in OFFICIAL_SINGLE_TITLES:
-        return False
-
-    if t in OFFICIAL_SPECIAL_TITLES:
-        return False
-
-    return any(word in combined for word in EXCLUDE_WORDS)
-
-
 def get_color(label, fmt):
     label = (label or "").lower()
     fmt = (fmt or "").lower()
@@ -186,6 +168,26 @@ def get_color(label, fmt):
     return DEFAULT_COLOR
 
 
+def should_exclude(fmt, title, label=None, special=None):
+    f = (fmt or "").lower()
+    t = title_key(title)
+    l = (label or "").lower()
+    s = (special or "").lower()
+
+    combined = " ".join([f, t, l, s])
+
+    if t in OFFICIAL_ALBUM_TITLES:
+        return False
+
+    if t in OFFICIAL_SINGLE_TITLES:
+        return False
+
+    if t in OFFICIAL_SPECIAL_TITLES:
+        return False
+
+    return any(word in combined for word in EXCLUDE_WORDS)
+
+
 def get_type(fmt, title, special=None, label=None):
     f = (fmt or "").lower()
     t = title_key(title)
@@ -197,7 +199,6 @@ def get_type(fmt, title, special=None, label=None):
 
     combined = " ".join([f, s, l, t])
 
-    # Special first. A promo 12" is a special release, not a normal single.
     if any(word in combined for word in SPECIAL_WORDS):
         return "special"
 
@@ -210,14 +211,12 @@ def get_type(fmt, title, special=None, label=None):
     if t in OFFICIAL_SINGLE_TITLES:
         return "single"
 
-    # Format is only a fallback. It must not overrule collector logic.
     if any(x in f for x in ['7"', '10"', '12"', "single", "cass", "cd"]):
         return "single"
 
     if any(x in f for x in ["lp", "2x", "3x", "album"]):
         return "album"
 
-    # Unknown junk stays out.
     return None
 
 
@@ -254,7 +253,7 @@ def make_tags(release_type, fmt, title, special=None, label=None, year=None):
 
     if "promo" in combined or "promotional" in combined:
         tags.append("Promo")
-    if "white label" in combined:
+    if "white label" in combined or "w/lbl" in combined:
         tags.append("White Label")
     if "test pressing" in combined or "test press" in combined:
         tags.append("Test Press")
@@ -271,13 +270,16 @@ def make_tags(release_type, fmt, title, special=None, label=None, year=None):
     if "numbered" in combined or s == "num":
         tags.append("Numbered")
 
-    if year:
-        if int(year) >= 2010:
-            tags.append("Reissue")
-        elif 1993 <= int(year) <= 2009:
-            tags.append("Original era")
+    try:
+        y = int(year or 0)
+    except ValueError:
+        y = 0
 
-    # Deduplicate while preserving order
+    if y >= 2010:
+        tags.append("Reissue")
+    elif 1993 <= y <= 2009:
+        tags.append("Original era")
+
     clean = []
     for tag in tags:
         if tag and tag not in clean:
@@ -286,87 +288,67 @@ def make_tags(release_type, fmt, title, special=None, label=None, year=None):
     return clean
 
 
-records = []
-seen_release_ids = set()
-owned_master_ids = set()
-
-for o in col["owned"]:
-    release_id = o.get("id")
-    master_id = o.get("master_id")
-    fmt = o.get("format") or "LP"
-    title = o.get("title", "")
-    label = o.get("label", "")
-    special = o.get("special")
+def make_record(item, owned):
+    release_id = item.get("id")
+    master_id = item.get("master_id") or release_id
+    title = item.get("title", "")
+    year = item.get("year") or 0
+    fmt = item.get("format") or "Unknown"
+    label = item.get("label", "")
+    catalog = item.get("catalog", "")
+    thumb = item.get("thumb", "")
+    special = item.get("special")
 
     release_type = get_type(fmt, title, special, label)
 
     if release_type is None:
-        continue
+        return None
 
-    if release_id in seen_release_ids:
-        continue
-
-    seen_release_ids.add(release_id)
-
-    if master_id:
-        owned_master_ids.add(master_id)
-
-    records.append({
-        "id": f"release_{release_id}",
+    return {
+        "id": f"release_{release_id}" if owned else f"want_{release_id}",
         "release_id": release_id,
-        "mid": master_id or release_id,
+        "mid": master_id,
         "title": title,
-        "year": o.get("year") or 0,
+        "year": year,
         "type": release_type,
-        "owned": True,
-        "cat": o.get("catalog", ""),
+        "owned": bool(owned),
+        "cat": catalog,
         "label": label,
         "format": fmt,
         "color": get_color(label, fmt),
         "wish": False,
-        "img": o.get("thumb", ""),
+        "img": thumb,
         "special": special,
-        "tags": make_tags(release_type, fmt, title, special, label, o.get("year") or 0),
-    })
+        "tags": make_tags(release_type, fmt, title, special, label, year),
+    }
 
-seen_missing_mids = set()
 
-for d in disc["releases"]:
-    mid = d.get("mid")
-    fmt = d.get("fmt") or "LP"
-    title = d.get("title", "")
-    label = d.get("label", "")
+records = []
+seen_ids = set()
 
-    release_type = get_type(fmt, title, None, label)
+for item in col.get("owned", []):
+    rec = make_record(item, owned=True)
 
-    if release_type is None:
+    if not rec:
         continue
 
-    if mid in owned_master_ids:
+    if rec["release_id"] in seen_ids:
         continue
 
-    if mid in seen_missing_mids:
+    seen_ids.add(rec["release_id"])
+    records.append(rec)
+
+for item in want.get("wanted", []):
+    rec = make_record(item, owned=False)
+
+    if not rec:
         continue
 
-    seen_missing_mids.add(mid)
+    if rec["release_id"] in seen_ids:
+        continue
 
-    records.append({
-        "id": f"missing_{mid}",
-        "release_id": None,
-        "mid": mid,
-        "title": title,
-        "year": d.get("year") or 0,
-        "type": release_type,
-        "owned": False,
-        "cat": "",
-        "label": label,
-        "format": fmt,
-        "color": get_color(label, fmt),
-        "wish": False,
-        "img": d.get("thumb", ""),
-        "special": None,
-        "tags": make_tags(release_type, fmt, title, None, label, d.get("year") or 0),
-    })
+    seen_ids.add(rec["release_id"])
+    records.append(rec)
 
 records.sort(key=lambda r: (r["year"], r["type"], r["title"], r["format"], r["cat"]))
 
@@ -403,7 +385,6 @@ with open(out_path, "w", encoding="utf-8") as f:
 
 owned_count = sum(1 for r in records if r["owned"])
 missing_count = sum(1 for r in records if not r["owned"])
-
 album_count = sum(1 for r in records if r["type"] == "album")
 single_count = sum(1 for r in records if r["type"] == "single")
 special_count = sum(1 for r in records if r["type"] == "special")
