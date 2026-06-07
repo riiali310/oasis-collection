@@ -110,6 +110,7 @@ function Cover({ r, editing, hidden, onOpen, onHide }) {
       </div>
       <div className="cmeta">
         <span className="cat">{r.cat}</span>
+        {r.completionTotal > 1 && <span className="comp-pill">{r.completionOwned}/{r.completionTotal}</span>}
         <span className={"dot " + (r.owned ? "on" : "off")} />
       </div>
     </div>
@@ -124,7 +125,12 @@ function Row({ r, editing, hidden, onOpen, onHide }) {
       <div className="row-cov" style={{ background: `linear-gradient(155deg, ${c1}, ${c2})` }}>
         <CoverImg src={r._img} alt={r.title} />
       </div>
-      <div className="row-title">{r.title}{specialText(r) && <span className="row-special">{specialText(r)}</span>}<small>{TYPE_LABEL[r.type]} · {r.label}</small></div>
+      <div className="row-title">
+        {r.title}
+        {specialText(r) && <span className="row-special">{specialText(r)}</span>}
+        {r.completionTotal > 1 && <span className="row-completion">{r.completionOwned}/{r.completionTotal}</span>}
+        <small>{TYPE_LABEL[r.type]} · {r.label}</small>
+      </div>
       <div className="c fmt">{r.format}</div>
       <div className="c cat-col mono">{r.cat}</div>
       <div className={"badge " + (r.owned ? "own" : "miss")}>{r.owned ? "● HYLLYSSÄ" : "○ PUUTTUU"}</div>
@@ -182,7 +188,7 @@ function Detail({ r, auth, allRecords, onClose, onToggleOwned, onToggleWish }) {
             </div>
             {variants.length > 1 && (
               <div className="compare">
-                <div className="compare-title">Saman julkaisun versiot</div>
+                <div className="compare-title">Saman julkaisun versiot <span>{r.completionOwned}/{r.completionTotal} omistettu</span></div>
                 {variants.map(v => (
                   <div className={"compare-row" + (v.id === r.id ? " current" : "")} key={v.id}>
                     <span className={"dot " + (v.owned ? "on" : "off")} />
@@ -277,6 +283,75 @@ function Timeline({ records }) {
   );
 }
 
+function AlmostComplete({ records, onOpen }) {
+  const groups = useMemo(() => {
+    const map = {};
+    records.forEach(r => {
+      const key = r.mid || r.title;
+      if (!map[key]) map[key] = [];
+      map[key].push(r);
+    });
+
+    return Object.values(map)
+      .map(group => {
+        const owned = group.filter(r => r.owned);
+        const missing = group.filter(r => !r.owned);
+        const sorted = [...group].sort((a, b) =>
+          a.year - b.year ||
+          String(a.format).localeCompare(String(b.format)) ||
+          String(a.cat).localeCompare(String(b.cat))
+        );
+
+        return {
+          key: group[0].mid || group[0].title,
+          title: group[0].title,
+          owned,
+          missing,
+          total: group.length,
+          records: sorted,
+          openRecord: missing[0] || owned[0] || group[0],
+        };
+      })
+      .filter(g => g.total > 1 && g.owned.length > 0 && g.missing.length > 0)
+      .sort((a, b) =>
+        a.missing.length - b.missing.length ||
+        b.owned.length - a.owned.length ||
+        a.title.localeCompare(b.title)
+      )
+      .slice(0, 6);
+  }, [records]);
+
+  if (!groups.length) return null;
+
+  return (
+    <section className="almost">
+      <div className="almost-head">
+        <span>Almost Complete</span>
+        <i>julkaisut, joista puuttuu enää muutama versio</i>
+      </div>
+      <div className="almost-grid">
+        {groups.map(g => (
+          <button className="almost-card" key={g.key} onClick={() => onOpen(g.openRecord)}>
+            <div className="almost-top">
+              <strong>{g.title}</strong>
+              <span>{g.owned.length}/{g.total}</span>
+            </div>
+            <div className="almost-bar">
+              <span style={{ width: `${Math.round((g.owned.length / g.total) * 100)}%` }} />
+            </div>
+            <div className="almost-missing">
+              {g.missing.slice(0, 3).map(r => (
+                <em key={r.id}>{r.format}{r.cat ? ` · ${r.cat}` : ""}</em>
+              ))}
+              {g.missing.length > 3 && <em>+{g.missing.length - 3} lisää</em>}
+            </div>
+          </button>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 // ── App ──
 function App() {
   const base = window.OASIS || [];
@@ -305,13 +380,35 @@ function App() {
   useEffect(() => lsSet("oasis.sort", sort), [sort]);
   useEffect(() => lsSet("oasis.view", view), [view]);
 
-  // merge overrides + cover art
-  const records = useMemo(() => base.map(r => ({
-    ...r,
-    owned: r.id in ownOverride ? ownOverride[r.id] : r.owned,
-    wish: r.id in wishOverride ? wishOverride[r.id] : r.wish,
-    _img: r.img || art[r.id] || "",
-  })), [base, ownOverride, wishOverride, art]);
+  // merge overrides + cover art + master completion
+  const records = useMemo(() => {
+    const merged = base.map(r => ({
+      ...r,
+      owned: r.id in ownOverride ? ownOverride[r.id] : r.owned,
+      wish: r.id in wishOverride ? wishOverride[r.id] : r.wish,
+      _img: r.img || art[r.id] || "",
+    }));
+
+    const groups = {};
+    merged.forEach(r => {
+      const key = r.mid || r.title;
+      if (!groups[key]) groups[key] = [];
+      groups[key].push(r);
+    });
+
+    return merged.map(r => {
+      const group = groups[r.mid || r.title] || [r];
+      const completionOwned = group.filter(x => x.owned).length;
+      const completionTotal = group.length;
+
+      return {
+        ...r,
+        completionOwned,
+        completionTotal,
+        completionMissing: completionTotal - completionOwned,
+      };
+    });
+  }, [base, ownOverride, wishOverride, art]);
 
   const ownedCount = records.filter(r => r.owned).length;
   const total = records.length;
@@ -416,6 +513,7 @@ function App() {
       </section>
 
       <Timeline records={records} />
+      <AlmostComplete records={records} onOpen={setSel} />
 
       {/* Controls */}
       <div className="ctrl">
