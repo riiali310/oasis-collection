@@ -140,8 +140,11 @@ ALBUM_BOX_TITLES = {
 SINGLES_BOX_TITLES = {
     "definitely maybe 7 singles box set",
     "what s the story morning glory 7 singles box set",
+    "what s the story morning glory singles",
     "complete 7 inch singles collection box vol 1",
     "complete 7 inch singles collection box vol 2",
+    "complete 7inch singles collection box vol 1",
+    "complete 7inch singles collection box vol 2",
     "dig out your soul 7 singles box set",
 }
 
