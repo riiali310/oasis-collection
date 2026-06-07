@@ -297,42 +297,111 @@ function Timeline({ records }) {
   );
 }
 
+const CREATION_CORE = [
+  { title:"Columbia", format:'12"', cat:"CTP 8", year:1993, group:"Promos" },
+  { title:"Supersonic", format:'7"', cat:"CRE 176", year:1994, group:'7" singles' },
+  { title:"Supersonic", format:'12"', cat:"CRE 176T", year:1994, group:'12" singles' },
+  { title:"Shakermaker", format:'7"', cat:"CRE 182", year:1994, group:'7" singles' },
+  { title:"Shakermaker", format:'12"', cat:"CRE 182T", year:1994, group:'12" singles' },
+  { title:"Live Forever", format:'7"', cat:"CRE 185", year:1994, group:'7" singles' },
+  { title:"Live Forever", format:'12"', cat:"CRE 185T", year:1994, group:'12" singles' },
+  { title:"Cigarettes & Alcohol", format:'7"', cat:"CRE 190", year:1994, group:'7" singles' },
+  { title:"Cigarettes & Alcohol", format:'12"', cat:"CRE 190T", year:1994, group:'12" singles' },
+  { title:"Whatever", format:'7"', cat:"CRE 195", year:1994, group:'7" singles' },
+  { title:"Whatever", format:'12"', cat:"CRE 195T", year:1994, group:'12" singles' },
+  { title:"Definitely Maybe", format:"LP", cat:"CRE LP 169", year:1994, group:"Albums / LPs" },
+  { title:"Some Might Say", format:'7"', cat:"CRE 204", year:1995, group:'7" singles' },
+  { title:"Some Might Say", format:'12"', cat:"CRE 204T", year:1995, group:'12" singles' },
+  { title:"Roll With It", format:'7"', cat:"CRE 212", year:1995, group:'7" singles' },
+  { title:"Roll With It", format:'12"', cat:"CRE 212T", year:1995, group:'12" singles' },
+  { title:"Wonderwall", format:'7"', cat:"CRE 215", year:1995, group:'7" singles' },
+  { title:"Wonderwall", format:'12"', cat:"CRE 215T", year:1995, group:'12" singles' },
+  { title:"Don't Look Back In Anger", format:'7"', cat:"CRE 221", year:1996, group:'7" singles' },
+  { title:"Don't Look Back In Anger", format:'12"', cat:"CRE 221T", year:1996, group:'12" singles' },
+  { title:"(What's The Story) Morning Glory?", format:"2LP", cat:"CRE LP 189", year:1995, group:"Albums / LPs" },
+  { title:"D'You Know What I Mean?", format:'7"', cat:"CRE 256", year:1997, group:'7" singles' },
+  { title:"D'You Know What I Mean?", format:'12"', cat:"CRE 256T", year:1997, group:'12" singles' },
+  { title:"Stand By Me", format:'7"', cat:"CRE 278", year:1997, group:'7" singles' },
+  { title:"Stand By Me", format:'12"', cat:"CRE 278T", year:1997, group:'12" singles' },
+  { title:"All Around The World", format:'7"', cat:"CRE 282", year:1998, group:'7" singles' },
+  { title:"All Around The World", format:'12"', cat:"CRE 282T", year:1998, group:'12" singles' },
+  { title:"Be Here Now", format:"2LP", cat:"CRE LP 219", year:1997, group:"Albums / LPs" },
+  { title:"The Masterplan", format:"2LP", cat:"CRE LP 241", year:1998, group:"Albums / LPs" },
+  { title:"The Masterplan", format:'7x10"', cat:"CRELX 241", year:1998, group:"Box sets" },
+];
+
+const normCat = (cat) => String(cat || "")
+  .toUpperCase()
+  .replace(/[^A-Z0-9]/g, "");
+
 function CreationTracker({ records, onOpen }) {
-  const creation = records.filter(r => {
-    const label = (r.label || "").toLowerCase();
-    const cat = (r.cat || "").toUpperCase();
-    return label.includes("creation") || cat.startsWith("CRE") || cat.startsWith("CTP");
-  });
+  const [openGroup, setOpenGroup] = useState(null);
 
-  if (!creation.length) return null;
+  const byCat = useMemo(() => {
+    const map = {};
+    records.forEach(r => {
+      const key = normCat(r.cat);
+      if (key && !map[key]) map[key] = r;
+    });
+    return map;
+  }, [records]);
 
-  const owned = creation.filter(r => r.owned);
-  const missing = creation.filter(r => !r.owned);
-  const pct = Math.round((owned.length / creation.length) * 100);
-
-  const isPromo = (r) => {
-    const cat = (r.cat || "").toUpperCase();
-    return cat.startsWith("CTP") || (r.tags || []).some(t =>
-      ["Promo", "White Label", "Test Press", "Advance", "Sampler", "Acetate"].includes(t)
-    );
-  };
+  const core = useMemo(() => CREATION_CORE.map(item => {
+    const record = byCat[normCat(item.cat)] || null;
+    return {
+      ...item,
+      record,
+      owned: !!record?.owned,
+      missing: !record?.owned,
+    };
+  }), [byCat]);
 
   const groups = [
-    ['7" singles', r => r.format === '7"'],
-    ['12" singles', r => r.format === '12"'],
-    ["Promos", isPromo],
-    ["Albums / LPs", r => r.type === "album"],
-    ["Box sets", r => (r.tags || []).includes("Box")],
-  ].filter(([, fn]) => creation.some(fn));
+    '7" singles',
+    '12" singles',
+    "Promos",
+    "Albums / LPs",
+    "Box sets",
+  ].map(label => {
+    const items = core.filter(i => i.group === label);
+    const owned = items.filter(i => i.owned).length;
+    return { label, items, owned, total: items.length };
+  }).filter(g => g.total > 0);
+
+  const ownedCount = core.filter(i => i.owned).length;
+  const totalCount = core.length;
+  const pct = Math.round((ownedCount / Math.max(totalCount, 1)) * 100);
+
+  const creationSpecials = records
+    .filter(r => {
+      const cat = (r.cat || "").toUpperCase();
+      const label = (r.label || "").toLowerCase();
+      const tags = r.tags || [];
+      const isCore = CREATION_CORE.some(i => normCat(i.cat) === normCat(r.cat));
+
+      const isCreation = label.includes("creation") || cat.startsWith("CRE") || cat.startsWith("CTP");
+      const isSpecial = r.type === "special" || cat.startsWith("CTP") || tags.some(t =>
+        ["Promo", "White Label", "Test Press", "Advance", "Sampler", "Acetate", "Limited", "Numbered"].includes(t)
+      );
+
+      return isCreation && isSpecial && !isCore;
+    })
+    .sort((a, b) =>
+      Number(a.owned) - Number(b.owned) ||
+      a.year - b.year ||
+      String(a.cat).localeCompare(String(b.cat))
+    );
+
+  const activeGroup = groups.find(g => g.label === openGroup) || null;
 
   return (
     <section className="creation-tracker">
       <div className="creation-head">
         <div>
-          <span>Creation Records Tracker</span>
-          <i>alkuperäinen Oasis-ydinsarja</i>
+          <span>Creation Core Tracker</span>
+          <i>UK Creation Records -vinyyliydinsarja</i>
         </div>
-        <strong>{owned.length}/{creation.length}</strong>
+        <strong>{ownedCount}/{totalCount}</strong>
       </div>
 
       <div className="creation-bar">
@@ -340,31 +409,49 @@ function CreationTracker({ records, onOpen }) {
       </div>
 
       <div className="creation-groups">
-        {groups.map(([label, fn]) => {
-          const list = creation.filter(fn);
-          const own = list.filter(r => r.owned).length;
-
-          return (
-            <button className="creation-group" key={label} onClick={() => {
-              const firstMissing = list.find(r => !r.owned);
-              if (firstMissing) onOpen(firstMissing);
-            }}>
-              <b>{own}/{list.length}</b>
-              <span>{label}</span>
-            </button>
-          );
-        })}
+        {groups.map(g => (
+          <button
+            className={"creation-group " + (openGroup === g.label ? "active" : "")}
+            key={g.label}
+            onClick={() => setOpenGroup(openGroup === g.label ? null : g.label)}
+          >
+            <b>{g.owned}/{g.total}</b>
+            <span>{g.label}</span>
+          </button>
+        ))}
       </div>
 
-      {missing.length > 0 && (
-        <div className="creation-missing">
-          <div className="creation-sub">Missing Creation</div>
-          {missing.slice(0, 8).map(r => (
-            <button key={r.id} onClick={() => onOpen(r)}>
-              <span>{r.title}</span>
-              <em>{r.format} · {r.cat || r.label}</em>
-            </button>
-          ))}
+      {activeGroup && (
+        <div className="creation-checklist">
+          <div className="creation-sub">{activeGroup.label}</div>
+          <div className="creation-list">
+            {activeGroup.items.map(item => (
+              <button
+                key={item.cat}
+                className={"creation-row " + (item.owned ? "owned" : "missing")}
+                onClick={() => item.record && onOpen(item.record)}
+                disabled={!item.record}
+              >
+                <span>{item.owned ? "✓" : "○"}</span>
+                <strong>{item.title}</strong>
+                <em>{item.format} · {item.cat} · {item.year}</em>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {creationSpecials.length > 0 && (
+        <div className="creation-specials">
+          <div className="creation-sub">Creation Promos & Specials</div>
+          <div className="creation-missing">
+            {creationSpecials.slice(0, 8).map(r => (
+              <button key={r.id} onClick={() => onOpen(r)}>
+                <span>{r.owned ? "✓ " : "○ "}{r.title}</span>
+                <em>{r.format} · {r.cat || r.label}</em>
+              </button>
+            ))}
+          </div>
         </div>
       )}
     </section>

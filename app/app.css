@@ -547,3 +547,99 @@ a{color:inherit;}
     grid-template-columns:1fr;
   }
 }
+
+/* ── Creation Core checklist refinement ───────────────── */
+.creation-group.active{
+  border-color:var(--ink);
+  background:var(--paper3);
+  box-shadow:var(--shadow);
+}
+.creation-checklist{
+  margin:14px 0 16px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:var(--paper2);
+  overflow:hidden;
+}
+.creation-list{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+}
+.creation-row{
+  display:grid;
+  grid-template-columns:24px 1fr;
+  gap:8px 10px;
+  align-items:start;
+  text-align:left;
+  border:0;
+  border-right:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  background:transparent;
+  color:var(--ink);
+  padding:11px 12px;
+}
+.creation-row:hover:not(:disabled){
+  background:var(--paper3);
+}
+.creation-row:disabled{
+  cursor:default;
+}
+.creation-row span{
+  grid-row:1 / span 2;
+  font-weight:800;
+  color:var(--accent);
+}
+.creation-row.owned span{
+  color:var(--green);
+}
+.creation-row strong{
+  font-family:"Hanken Grotesk",sans-serif;
+  font-size:15px;
+  line-height:1.05;
+}
+.creation-row em{
+  grid-column:2;
+  font-style:normal;
+  font-family:"Space Mono",monospace;
+  font-size:10.5px;
+  color:var(--ink2);
+}
+.creation-specials{
+  margin-top:12px;
+}
+
+/* ── Tag filters ─────────────────────────────────────── */
+.tag-filters{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  align-items:center;
+  margin:13px 0 8px;
+}
+.tag-filters span{
+  font-family:"Space Mono",monospace;
+  font-size:10px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--ink3);
+  margin-right:5px;
+}
+.tag-filters button{
+  border:1px solid var(--line);
+  background:transparent;
+  color:var(--ink2);
+  border-radius:999px;
+  padding:7px 11px;
+  font-family:"Space Mono",monospace;
+  font-size:11px;
+  letter-spacing:.04em;
+}
+.tag-filters button:hover{
+  border-color:var(--ink);
+  color:var(--ink);
+}
+.tag-filters button.active{
+  background:var(--ink);
+  color:var(--paper);
+  border-color:var(--ink);
+}
