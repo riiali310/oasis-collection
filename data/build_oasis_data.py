@@ -153,6 +153,49 @@ EXCLUDE_WORDS = [
 ]
 
 
+def is_vinyl_format(fmt, title=""):
+    f = (fmt or "").lower()
+    t = (title or "").lower()
+
+    vinyl_words = [
+        '7"',
+        '10"',
+        '12"',
+        "lp",
+        "2xlp",
+        "3xlp",
+        "vinyl",
+        "box",
+    ]
+
+    non_vinyl_words = [
+        "cass",
+        "cassette",
+        "cd",
+        "cdr",
+        "dvd",
+        "file",
+        "mp3",
+        "flac",
+        "blu",
+        "vhs",
+        "minidisc",
+        "dat",
+    ]
+
+    if any(word in f for word in non_vinyl_words):
+        return False
+
+    if any(word in f for word in vinyl_words):
+        return True
+
+    # Osa boxeista tulee formaattina 7", mutta jos title kertoo box setistä, pidetään se.
+    if "box" in t:
+        return True
+
+    return False
+
+
 def get_color(label, fmt):
     label = (label or "").lower()
     fmt = (fmt or "").lower()
@@ -298,6 +341,9 @@ def make_record(item, owned):
     catalog = item.get("catalog", "")
     thumb = item.get("thumb", "")
     special = item.get("special")
+
+    if not is_vinyl_format(fmt, title):
+        return None
 
     release_type = get_type(fmt, title, special, label)
 
