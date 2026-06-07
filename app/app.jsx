@@ -317,9 +317,10 @@ function CreationTracker({ records, onOpen }) {
   const groups = [
     ['7" singles', r => r.format === '7"'],
     ['12" singles', r => r.format === '12"'],
-    ["Cassette", r => (r.format || "").toLowerCase().includes("cass")],
+    ['10" singles', r => r.format === '10"'],
+    ["LP / Box", r => ["LP", "2xLP", "3xLP", "Box"].includes(r.format)],
     ["Promos", isPromo],
-  ];
+  ].filter(([, fn]) => creation.some(fn));
 
   return (
     <section className="creation-tracker">
