@@ -310,9 +310,12 @@ function CreationTracker({ records, onOpen }) {
   const missing = creation.filter(r => !r.owned);
   const pct = Math.round((owned.length / creation.length) * 100);
 
-  const isPromo = (r) => (r.tags || []).some(t =>
-    ["Promo", "White Label", "Test Press", "Advance", "Sampler", "Acetate"].includes(t)
-  );
+  const isPromo = (r) => {
+    const cat = (r.cat || "").toUpperCase();
+    return cat.startsWith("CTP") || (r.tags || []).some(t =>
+      ["Promo", "White Label", "Test Press", "Advance", "Sampler", "Acetate"].includes(t)
+    );
+  };
 
   const groups = [
     ['7" singles', r => r.format === '7"'],
