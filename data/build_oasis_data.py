@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import json
 import os
+import re
 from datetime import datetime
 
 base = os.path.dirname(os.path.abspath(__file__))
@@ -32,40 +33,6 @@ FMT_COLORS = {
 
 DEFAULT_COLOR = ["#6b5d49", "#1d1a14"]
 
-SINGLE_TITLES = {
-    "supersonic",
-    "shakermaker",
-    "live forever",
-    "cigarettes & alcohol",
-    "whatever",
-    "some might say",
-    "roll with it",
-    "wonderwall",
-    "don't look back in anger",
-    "d'you know what i mean?",
-    "stand by me",
-    "all around the world",
-    "go let it out",
-    "who feels love?",
-    "sunday morning call",
-    "the hindu times",
-    "stop crying your heart out",
-    "little by little",
-    "songbird",
-    "lyla",
-    "the importance of being idle",
-    "let there be love",
-    "lord don't slow me down",
-    "the shock of the lightning",
-    "i'm outta time",
-    "falling down",
-    "columbia",
-    "acquiesce",
-    "i am the walrus",
-    "fuckin' in the bushes",
-    "wibbling rivalry",
-}
-
 
 def normalize_title(title):
     return (
@@ -75,6 +42,88 @@ def normalize_title(title):
         .replace("`", "'")
         .strip()
     )
+
+
+def title_key(title):
+    t = normalize_title(title)
+    t = t.replace("&", " and ")
+    t = re.sub(r"[^a-z0-9]+", " ", t)
+    return re.sub(r"\s+", " ", t).strip()
+
+
+OFFICIAL_ALBUM_TITLES = {
+    "definitely maybe",
+    "what s the story morning glory",
+    "be here now",
+    "the masterplan",
+    "standing on the shoulder of giants",
+    "familiar to millions",
+    "heathen chemistry",
+    "don t believe the truth",
+    "dig out your soul",
+    "stop the clocks",
+    "time flies 1994 2009",
+    "knebworth 1996",
+}
+
+OFFICIAL_SINGLE_TITLES = {
+    "supersonic",
+    "shakermaker",
+    "live forever",
+    "cigarettes and alcohol",
+    "whatever",
+    "some might say",
+    "roll with it",
+    "wonderwall",
+    "don t look back in anger",
+    "champagne supernova",
+    "d you know what i mean",
+    "stand by me",
+    "all around the world",
+    "don t go away",
+    "go let it out",
+    "who feels love",
+    "sunday morning call",
+    "the hindu times",
+    "stop crying your heart out",
+    "little by little",
+    "songbird",
+    "lyla",
+    "the importance of being idle",
+    "let there be love",
+    "lord don t slow me down",
+    "the shock of the lightning",
+    "i m outta time",
+    "falling down",
+    "columbia",
+    "acquiesce",
+    "little by little she is love",
+    "i m outta time remixes",
+    "falling down a monstrous psychedelic bubble exploding in your mind",
+}
+
+OFFICIAL_SPECIAL_TITLES = {
+    "5 tracks taken from the forthcoming album definitely maybe",
+    "cum on feel the noize",
+    "it s good to be free",
+    "i am the walrus",
+    "fuckin in the bushes",
+    "wibbling rivalry",
+    "live demonstration",
+    "what s the story morning glory singles",
+}
+
+SPECIAL_WORDS = [
+    "promo",
+    "promotional",
+    "white label",
+    "test pressing",
+    "test press",
+    "acetate",
+    "sampler",
+    "advance",
+    "demo",
+]
 
 
 def get_color(label, fmt):
@@ -92,23 +141,30 @@ def get_color(label, fmt):
     return DEFAULT_COLOR
 
 
-def get_type(fmt, title):
+def get_type(fmt, title, special=None, label=None):
     f = (fmt or "").lower()
-    t = normalize_title(title)
+    t = title_key(title)
+    s = (special or "").lower()
+    l = (label or "").lower()
+
+    combined = " ".join([f, s, l])
+
+    if any(word in combined for word in SPECIAL_WORDS):
+        return "special"
 
     if "box" in f or "box" in t:
         return "special"
 
-    if t in SINGLE_TITLES:
-        return "single"
+    if t in OFFICIAL_SPECIAL_TITLES:
+        return "special"
 
-    if any(x in f for x in ['7"', '12"', '10"', "single", "cass", "cd"]):
-        return "single"
-
-    if any(x in f for x in ["lp", "2x", "3x", "album"]):
+    if t in OFFICIAL_ALBUM_TITLES:
         return "album"
 
-    return "album"
+    if t in OFFICIAL_SINGLE_TITLES:
+        return "single"
+
+    return None
 
 
 records = []
@@ -118,6 +174,15 @@ owned_master_ids = set()
 for o in col["owned"]:
     release_id = o.get("id")
     master_id = o.get("master_id")
+    fmt = o.get("format") or "LP"
+    title = o.get("title", "")
+    label = o.get("label", "")
+    special = o.get("special")
+
+    release_type = get_type(fmt, title, special, label)
+
+    if release_type is None:
+        continue
 
     if release_id in seen_release_ids:
         continue
@@ -127,29 +192,35 @@ for o in col["owned"]:
     if master_id:
         owned_master_ids.add(master_id)
 
-    fmt = o.get("format") or "LP"
-
     records.append({
         "id": f"release_{release_id}",
         "release_id": release_id,
         "mid": master_id or release_id,
-        "title": o.get("title", ""),
+        "title": title,
         "year": o.get("year") or 0,
-        "type": get_type(fmt, o.get("title", "")),
+        "type": release_type,
         "owned": True,
         "cat": o.get("catalog", ""),
-        "label": o.get("label", ""),
+        "label": label,
         "format": fmt,
-        "color": get_color(o.get("label", ""), fmt),
+        "color": get_color(label, fmt),
         "wish": False,
         "img": o.get("thumb", ""),
-        "special": o.get("special"),
+        "special": special,
     })
 
 seen_missing_mids = set()
 
 for d in disc["releases"]:
     mid = d.get("mid")
+    fmt = d.get("fmt") or "LP"
+    title = d.get("title", "")
+    label = d.get("label", "")
+
+    release_type = get_type(fmt, title, None, label)
+
+    if release_type is None:
+        continue
 
     if mid in owned_master_ids:
         continue
@@ -159,26 +230,24 @@ for d in disc["releases"]:
 
     seen_missing_mids.add(mid)
 
-    fmt = d.get("fmt") or "LP"
-
     records.append({
         "id": f"missing_{mid}",
         "release_id": None,
         "mid": mid,
-        "title": d.get("title", ""),
+        "title": title,
         "year": d.get("year") or 0,
-        "type": get_type(fmt, d.get("title", "")),
+        "type": release_type,
         "owned": False,
         "cat": "",
-        "label": d.get("label", ""),
+        "label": label,
         "format": fmt,
-        "color": get_color(d.get("label", ""), fmt),
+        "color": get_color(label, fmt),
         "wish": False,
         "img": d.get("thumb", ""),
         "special": None,
     })
 
-records.sort(key=lambda r: (r["year"], r["title"], r["format"], r["cat"]))
+records.sort(key=lambda r: (r["year"], r["type"], r["title"], r["format"], r["cat"]))
 
 lines = ["// Oasis-kokoelma - generoitu automaattisesti build_oasis_data.py-skriptillä"]
 lines.append(f"// Paivitetty: {datetime.now().strftime('%Y-%m-%d %H:%M')}")
@@ -213,5 +282,10 @@ with open(out_path, "w", encoding="utf-8") as f:
 owned_count = sum(1 for r in records if r["owned"])
 missing_count = sum(1 for r in records if not r["owned"])
 
+album_count = sum(1 for r in records if r["type"] == "album")
+single_count = sum(1 for r in records if r["type"] == "single")
+special_count = sum(1 for r in records if r["type"] == "special")
+
 print(f"Kirjoitettu {out_path}")
 print(f"  {owned_count} omistaa, {missing_count} puuttuu, {len(records)} yhteensa")
+print(f"  Albumit: {album_count}, Sinkut: {single_count}, Erikoiset: {special_count}")
