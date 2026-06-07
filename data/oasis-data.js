@@ -1,5 +1,5 @@
 // Oasis-kokoelma - generoitu automaattisesti build_oasis_data.py-skriptillä
-// Paivitetty: 2026-06-07 09:39
+// Paivitetty: 2026-06-07 10:05
 // Omistaa: 71 / 143
 window.OASIS = [
   { id:"missing_52245", mid:52245, title:"Columbia", year:1993, type:"single", owned:false, cat:"", label:"", format:"LP", color:["#6b5a34", "#1d1608"], wish:false, img:"https://i.discogs.com/M01MVCjf26Qlth9phByih-Snx-cFmF_lwpB_iW4dUkU/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTc1Nzk0/Ny0xMTU1NzkwNzA1/LmpwZWc.jpeg", special:null },
