@@ -221,6 +221,71 @@ def get_type(fmt, title, special=None, label=None):
     return None
 
 
+def make_tags(release_type, fmt, title, special=None, label=None, year=None):
+    f = (fmt or "").lower()
+    t = title_key(title)
+    s = (special or "").lower()
+    l = (label or "").lower()
+    tags = []
+
+    if release_type == "album":
+        tags.append("Albumi")
+    elif release_type == "single":
+        tags.append("Single")
+    elif release_type == "special":
+        tags.append("Erikois")
+
+    if '7"' in f:
+        tags.append('7"')
+    if '10"' in f:
+        tags.append('10"')
+    if '12"' in f:
+        tags.append('12"')
+    if "cass" in f:
+        tags.append("Cassette")
+    if "cd" in f:
+        tags.append("CD")
+    if "lp" in f:
+        tags.append("LP")
+    if "box" in f or "box" in t:
+        tags.append("Box")
+
+    combined = " ".join([f, t, s, l])
+
+    if "promo" in combined or "promotional" in combined:
+        tags.append("Promo")
+    if "white label" in combined:
+        tags.append("White Label")
+    if "test pressing" in combined or "test press" in combined:
+        tags.append("Test Press")
+    if "acetate" in combined:
+        tags.append("Acetate")
+    if "sampler" in combined:
+        tags.append("Sampler")
+    if "advance" in combined:
+        tags.append("Advance")
+    if "demo" in combined:
+        tags.append("Demo")
+    if "limited" in combined or "ltd" in combined:
+        tags.append("Limited")
+    if "numbered" in combined or s == "num":
+        tags.append("Numbered")
+
+    if year:
+        if int(year) >= 2010:
+            tags.append("Reissue")
+        elif 1993 <= int(year) <= 2009:
+            tags.append("Original era")
+
+    # Deduplicate while preserving order
+    clean = []
+    for tag in tags:
+        if tag and tag not in clean:
+            clean.append(tag)
+
+    return clean
+
+
 records = []
 seen_release_ids = set()
 owned_master_ids = set()
@@ -261,6 +326,7 @@ for o in col["owned"]:
         "wish": False,
         "img": o.get("thumb", ""),
         "special": special,
+        "tags": make_tags(release_type, fmt, title, special, label, o.get("year") or 0),
     })
 
 seen_missing_mids = set()
@@ -299,6 +365,7 @@ for d in disc["releases"]:
         "wish": False,
         "img": d.get("thumb", ""),
         "special": None,
+        "tags": make_tags(release_type, fmt, title, None, label, d.get("year") or 0),
     })
 
 records.sort(key=lambda r: (r["year"], r["type"], r["title"], r["format"], r["cat"]))
@@ -325,7 +392,8 @@ for r in records:
         f'color:{json.dumps(r["color"])}, '
         f'wish:false, '
         f'img:{json.dumps(r["img"])}, '
-        f'special:{special_js} }},'
+        f'special:{special_js}, '
+        f'tags:{json.dumps(r.get("tags", []))} }},'
     )
 
 lines.append("];")

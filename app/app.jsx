@@ -12,6 +12,7 @@ const QUOTES = [
 const TYPE_LABEL = { album: "Albumi", single: "Sinkku", special: "Erikois ★" };
 const SPECIAL_LABEL = { PROMO: "PROMO", LTD: "LTD", NUM: "NUM", MINT: "MINT", TEST: "TEST", WHITE: "WHITE" };
 const specialText = (r) => r.special || r.note || "";
+const visibleTags = (r) => (r.tags || []).slice(0, 5);
 
 function lsGet(k, d) { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } }
 function lsSet(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} }
@@ -113,6 +114,11 @@ function Cover({ r, editing, hidden, onOpen, onHide }) {
         {r.completionTotal > 1 && r.completionMissing > 0 && <span className="comp-pill">{r.completionOwned}/{r.completionTotal}</span>}
         <span className={"dot " + (r.owned ? "on" : "off")} />
       </div>
+      {visibleTags(r).length > 0 && (
+        <div className="tagline">
+          {visibleTags(r).map(tag => <span key={tag}>{tag}</span>)}
+        </div>
+      )}
     </div>
   );
 }
@@ -130,6 +136,9 @@ function Row({ r, editing, hidden, onOpen, onHide }) {
         {specialText(r) && <span className="row-special">{specialText(r)}</span>}
         {r.completionTotal > 1 && r.completionMissing > 0 && <span className="row-completion">{r.completionOwned}/{r.completionTotal}</span>}
         <small>{TYPE_LABEL[r.type]} · {r.label}</small>
+        {visibleTags(r).length > 0 && (
+          <span className="row-tags">{visibleTags(r).map(tag => <em key={tag}>{tag}</em>)}</span>
+        )}
       </div>
       <div className="c fmt">{r.format}</div>
       <div className="c cat-col mono">{r.cat}</div>
@@ -186,6 +195,11 @@ function Detail({ r, auth, allRecords, onClose, onToggleOwned, onToggleWish }) {
               <span className={"dot " + (r.owned ? "on" : "off")} />
               {r.owned ? "Hyllyssä" : (r.wish ? "Puuttuu · toivelistalla" : "Puuttuu")}
             </div>
+            {visibleTags(r).length > 0 && (
+              <div className="detail-tags">
+                {visibleTags(r).map(tag => <span key={tag}>{tag}</span>)}
+              </div>
+            )}
             {variants.length > 1 && (
               <div className="compare">
                 <div className="compare-title">Saman julkaisun versiot <span>{r.completionOwned}/{r.completionTotal} omistettu</span></div>
@@ -429,7 +443,7 @@ function App() {
       if (own === "miss" && r.owned) return false;
       if (q) {
         const needle = q.toLowerCase();
-        const hay = [r.title, r.year, r.cat, r.label, r.format, r.type, specialText(r)].join(" ").toLowerCase();
+        const hay = [r.title, r.year, r.cat, r.label, r.format, r.type, specialText(r), ...(r.tags || [])].join(" ").toLowerCase();
         if (!hay.includes(needle)) return false;
       }
       if (!editing && !showHidden && hiddenSet.has(r.id)) return false;
@@ -547,7 +561,7 @@ function App() {
       </div>
 
       {/* Sinkun formaatti — näkyy kun sinkut ovat mukana */}
-      {types.single && (
+      {singleOnly && (
         <div className="subfilter">
           <span className="subfilter-l">Sinkun formaatti</span>
           <div className="chips">
