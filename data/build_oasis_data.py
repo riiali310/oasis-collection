@@ -118,6 +118,41 @@ OFFICIAL_SPECIAL_TITLES = {
     "dig out your soul 7 singles box set",
 }
 
+
+COMPILATION_ALBUM_TITLES = {
+    "the masterplan",
+    "stop the clocks",
+    "time flies 1994 2009",
+}
+
+LIVE_ALBUM_TITLES = {
+    "familiar to millions",
+    "knebworth 1996",
+}
+
+ALBUM_BOX_TITLES = {
+    "complete studio album collection",
+    "oasis complete studio album collection",
+    "vinyl lp collectors box set",
+    "oasis vinyl lp collectors box set",
+}
+
+SINGLES_BOX_TITLES = {
+    "definitely maybe 7 singles box set",
+    "what s the story morning glory 7 singles box set",
+    "complete 7 inch singles collection box vol 1",
+    "complete 7 inch singles collection box vol 2",
+    "dig out your soul 7 singles box set",
+}
+
+ANNIVERSARY_BOX_WORDS = [
+    "anniversary",
+    "30th anniversary",
+    "25th anniversary",
+    "super deluxe",
+    "deluxe box",
+]
+
 SPECIAL_WORDS = [
     "promo",
     "promotional",
@@ -242,6 +277,12 @@ def get_type(fmt, title, special=None, label=None):
 
     combined = " ".join([f, s, l, t])
 
+    if t in ALBUM_BOX_TITLES or t in SINGLES_BOX_TITLES:
+        return "special"
+
+    if any(word in combined for word in ANNIVERSARY_BOX_WORDS):
+        return "special"
+
     if any(word in combined for word in SPECIAL_WORDS):
         return "special"
 
@@ -277,6 +318,18 @@ def make_tags(release_type, fmt, title, special=None, label=None, year=None):
     elif release_type == "special":
         tags.append("Erikois")
 
+    if t in COMPILATION_ALBUM_TITLES:
+        tags.append("Compilation")
+
+    if t in LIVE_ALBUM_TITLES:
+        tags.append("Live album")
+
+    if t in ALBUM_BOX_TITLES:
+        tags.append("Album box")
+
+    if t in SINGLES_BOX_TITLES:
+        tags.append("Singles box")
+
     if '7"' in f:
         tags.append('7"')
     if '10"' in f:
@@ -293,6 +346,9 @@ def make_tags(release_type, fmt, title, special=None, label=None, year=None):
         tags.append("Box")
 
     combined = " ".join([f, t, s, l])
+
+    if any(word in combined for word in ANNIVERSARY_BOX_WORDS):
+        tags.append("Anniversary box")
 
     if "promo" in combined or "promotional" in combined:
         tags.append("Promo")
