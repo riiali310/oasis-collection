@@ -317,9 +317,9 @@ function CreationTracker({ records, onOpen }) {
   const groups = [
     ['7" singles', r => r.format === '7"'],
     ['12" singles', r => r.format === '12"'],
-    ['10" singles', r => r.format === '10"'],
-    ["LP / Box", r => ["LP", "2xLP", "3xLP", "Box"].includes(r.format)],
     ["Promos", isPromo],
+    ["Albums / LPs", r => r.type === "album"],
+    ["Box sets", r => (r.tags || []).includes("Box")],
   ].filter(([, fn]) => creation.some(fn));
 
   return (
