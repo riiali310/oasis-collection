@@ -177,7 +177,7 @@ function Detail({ r, auth, allRecords, onClose, onToggleOwned, onToggleWish }) {
             </div>
             {variants.length > 1 && (
               <div className="compare">
-                <div className="compare-title">Release compare</div>
+                <div className="compare-title">Saman julkaisun versiot</div>
                 {variants.map(v => (
                   <div className={"compare-row" + (v.id === r.id ? " current" : "")} key={v.id}>
                     <span className={"dot " + (v.owned ? "on" : "off")} />
