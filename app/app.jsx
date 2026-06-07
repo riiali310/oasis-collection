@@ -297,6 +297,76 @@ function Timeline({ records }) {
   );
 }
 
+function CreationTracker({ records, onOpen }) {
+  const creation = records.filter(r => {
+    const label = (r.label || "").toLowerCase();
+    const cat = (r.cat || "").toUpperCase();
+    return label.includes("creation") || cat.startsWith("CRE") || cat.startsWith("CTP");
+  });
+
+  if (!creation.length) return null;
+
+  const owned = creation.filter(r => r.owned);
+  const missing = creation.filter(r => !r.owned);
+  const pct = Math.round((owned.length / creation.length) * 100);
+
+  const isPromo = (r) => (r.tags || []).some(t =>
+    ["Promo", "White Label", "Test Press", "Advance", "Sampler", "Acetate"].includes(t)
+  );
+
+  const groups = [
+    ['7" singles', r => r.format === '7"'],
+    ['12" singles', r => r.format === '12"'],
+    ["Cassette", r => (r.format || "").toLowerCase().includes("cass")],
+    ["Promos", isPromo],
+  ];
+
+  return (
+    <section className="creation-tracker">
+      <div className="creation-head">
+        <div>
+          <span>Creation Records Tracker</span>
+          <i>alkuperäinen Oasis-ydinsarja</i>
+        </div>
+        <strong>{owned.length}/{creation.length}</strong>
+      </div>
+
+      <div className="creation-bar">
+        <span style={{ width: pct + "%" }} />
+      </div>
+
+      <div className="creation-groups">
+        {groups.map(([label, fn]) => {
+          const list = creation.filter(fn);
+          const own = list.filter(r => r.owned).length;
+
+          return (
+            <button className="creation-group" key={label} onClick={() => {
+              const firstMissing = list.find(r => !r.owned);
+              if (firstMissing) onOpen(firstMissing);
+            }}>
+              <b>{own}/{list.length}</b>
+              <span>{label}</span>
+            </button>
+          );
+        })}
+      </div>
+
+      {missing.length > 0 && (
+        <div className="creation-missing">
+          <div className="creation-sub">Missing Creation</div>
+          {missing.slice(0, 8).map(r => (
+            <button key={r.id} onClick={() => onOpen(r)}>
+              <span>{r.title}</span>
+              <em>{r.format} · {r.cat || r.label}</em>
+            </button>
+          ))}
+        </div>
+      )}
+    </section>
+  );
+}
+
 function AlmostComplete({ records, onOpen }) {
   const groups = useMemo(() => {
     const map = {};
@@ -526,7 +596,7 @@ function App() {
         </div>
       </section>
 
-      <Timeline records={records} />
+      <CreationTracker records={records} onOpen={setSel} />
       <AlmostComplete records={records} onOpen={setSel} />
 
       {/* Controls */}
