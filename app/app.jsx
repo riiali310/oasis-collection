@@ -145,6 +145,11 @@ function Detail({ r, auth, allRecords, onClose, onToggleOwned, onToggleWish }) {
   const variants = (allRecords || [])
     .filter(x => x.mid === r.mid || x.title === r.title)
     .sort((a, b) => a.year - b.year || a.format.localeCompare(b.format) || a.cat.localeCompare(b.cat));
+
+  const discogsUrl = r.release_id
+    ? `https://www.discogs.com/release/${r.release_id}`
+    : `https://www.discogs.com/search/?q=${encodeURIComponent("Oasis " + r.title + " " + (r.cat || ""))}`;
+
   return (
     <div className="overlay" onClick={onClose}>
       <div className="modal" onClick={(e) => e.stopPropagation()}>
@@ -190,7 +195,7 @@ function Detail({ r, auth, allRecords, onClose, onToggleOwned, onToggleWish }) {
               </div>
             )}
             <div className="di-actions">
-              <a className="btn primary" href={DISCOGS} target="_blank" rel="noreferrer">Discogsissa ↗</a>
+              <a className="btn primary" href={discogsUrl} target="_blank" rel="noreferrer">Discogsissa ↗</a>
               {auth ? (
                 <button className={"btn" + (r.owned ? " danger" : "")} onClick={() => onToggleOwned(r.id)}>
                   {r.owned ? "Merkitse puuttuvaksi" : "Merkitse omistetuksi"}
