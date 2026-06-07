@@ -32,6 +32,50 @@ FMT_COLORS = {
 
 DEFAULT_COLOR = ["#6b5d49", "#1d1a14"]
 
+SINGLE_TITLES = {
+    "supersonic",
+    "shakermaker",
+    "live forever",
+    "cigarettes & alcohol",
+    "whatever",
+    "some might say",
+    "roll with it",
+    "wonderwall",
+    "don't look back in anger",
+    "d'you know what i mean?",
+    "stand by me",
+    "all around the world",
+    "go let it out",
+    "who feels love?",
+    "sunday morning call",
+    "the hindu times",
+    "stop crying your heart out",
+    "little by little",
+    "songbird",
+    "lyla",
+    "the importance of being idle",
+    "let there be love",
+    "lord don't slow me down",
+    "the shock of the lightning",
+    "i'm outta time",
+    "falling down",
+    "columbia",
+    "acquiesce",
+    "i am the walrus",
+    "fuckin' in the bushes",
+    "wibbling rivalry",
+}
+
+
+def normalize_title(title):
+    return (
+        (title or "")
+        .lower()
+        .replace("’", "'")
+        .replace("`", "'")
+        .strip()
+    )
+
 
 def get_color(label, fmt):
     label = (label or "").lower()
@@ -50,16 +94,19 @@ def get_color(label, fmt):
 
 def get_type(fmt, title):
     f = (fmt or "").lower()
-    t = (title or "").lower()
+    t = normalize_title(title)
 
     if "box" in f or "box" in t:
         return "special"
 
-    if any(x in f for x in ["lp", "2x", "3x"]):
-        return "album"
-
-    if any(x in f for x in ['7"', '12"', '10"']):
+    if t in SINGLE_TITLES:
         return "single"
+
+    if any(x in f for x in ['7"', '12"', '10"', "single", "cass", "cd"]):
+        return "single"
+
+    if any(x in f for x in ["lp", "2x", "3x", "album"]):
+        return "album"
 
     return "album"
 
