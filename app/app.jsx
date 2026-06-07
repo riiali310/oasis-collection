@@ -10,6 +10,8 @@ const QUOTES = [
   ["“Maybe you’re gonna be the one that saves me.”", "Wonderwall"],
 ];
 const TYPE_LABEL = { album: "Albumi", single: "Sinkku", special: "Erikois ★" };
+const SPECIAL_LABEL = { PROMO: "PROMO", LTD: "LTD", NUM: "NUM", MINT: "MINT", TEST: "TEST", WHITE: "WHITE" };
+const specialText = (r) => r.special || r.note || "";
 
 function lsGet(k, d) { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } }
 function lsSet(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} }
@@ -92,6 +94,7 @@ function Cover({ r, editing, hidden, onOpen, onHide }) {
         <CoverImg src={r._img} alt={r.title} />
         {!hasImg && <div className="vinyl" />}
         {r.wish && !r.owned && <span className="wishflag">TOIVE</span>}
+        {specialText(r) && <span className="specialflag">{specialText(r)}</span>}
         {hasImg ? (
           <div className="sleeve-scrim">
             <div className="s-foot"><span>{r.year}</span><span>{r.format}</span></div>
@@ -121,7 +124,7 @@ function Row({ r, editing, hidden, onOpen, onHide }) {
       <div className="row-cov" style={{ background: `linear-gradient(155deg, ${c1}, ${c2})` }}>
         <CoverImg src={r._img} alt={r.title} />
       </div>
-      <div className="row-title">{r.title}<small>{TYPE_LABEL[r.type]} · {r.label}</small></div>
+      <div className="row-title">{r.title}{specialText(r) && <span className="row-special">{specialText(r)}</span>}<small>{TYPE_LABEL[r.type]} · {r.label}</small></div>
       <div className="c fmt">{r.format}</div>
       <div className="c cat-col mono">{r.cat}</div>
       <div className={"badge " + (r.owned ? "own" : "miss")}>{r.owned ? "● HYLLYSSÄ" : "○ PUUTTUU"}</div>
@@ -133,12 +136,15 @@ function Row({ r, editing, hidden, onOpen, onHide }) {
 }
 
 // ── Detail modal ──
-function Detail({ r, auth, onClose, onToggleOwned, onToggleWish }) {
+function Detail({ r, auth, allRecords, onClose, onToggleOwned, onToggleWish }) {
   const [c1, c2] = r.color;
   useEffect(() => {
     const h = (e) => e.key === "Escape" && onClose();
     window.addEventListener("keydown", h); return () => window.removeEventListener("keydown", h);
   }, []);
+  const variants = (allRecords || [])
+    .filter(x => x.mid === r.mid || x.title === r.title)
+    .sort((a, b) => a.year - b.year || a.format.localeCompare(b.format) || a.cat.localeCompare(b.cat));
   return (
     <div className="overlay" onClick={onClose}>
       <div className="modal" onClick={(e) => e.stopPropagation()}>
@@ -157,7 +163,7 @@ function Detail({ r, auth, onClose, onToggleOwned, onToggleWish }) {
             {!r.owned && <div className="stamp">PUUTTUU</div>}
           </div>
           <div className="detail-info">
-            <div className="di-type">{TYPE_LABEL[r.type]}{r.note ? " · " + r.note : ""}</div>
+            <div className="di-type">{TYPE_LABEL[r.type]}{specialText(r) ? " · " + specialText(r) : ""}</div>
             <div className="di-title">{r.title}</div>
             <div className="di-grid">
               <div className="di-cell"><div className="k">Vuosi</div><div className="v">{r.year}</div></div>
@@ -169,6 +175,20 @@ function Detail({ r, auth, onClose, onToggleOwned, onToggleWish }) {
               <span className={"dot " + (r.owned ? "on" : "off")} />
               {r.owned ? "Hyllyssä" : (r.wish ? "Puuttuu · toivelistalla" : "Puuttuu")}
             </div>
+            {variants.length > 1 && (
+              <div className="compare">
+                <div className="compare-title">Release compare</div>
+                {variants.map(v => (
+                  <div className={"compare-row" + (v.id === r.id ? " current" : "")} key={v.id}>
+                    <span className={"dot " + (v.owned ? "on" : "off")} />
+                    <span>{v.format}</span>
+                    <strong>{v.cat || "—"}</strong>
+                    <em>{v.year}</em>
+                    {specialText(v) && <b>{specialText(v)}</b>}
+                  </div>
+                ))}
+              </div>
+            )}
             <div className="di-actions">
               <a className="btn primary" href={DISCOGS} target="_blank" rel="noreferrer">Discogsissa ↗</a>
               {auth ? (
@@ -208,6 +228,47 @@ function Login({ onClose, onSuccess }) {
         <div className="hint">Demo-salasana: <b>liveforever</b></div>
       </div>
     </div>
+  );
+}
+
+
+function ProgressRing({ label, owned, total }) {
+  const pct = total ? Math.round((owned / total) * 100) : 0;
+  return (
+    <div className="ring-card">
+      <div className="ring" style={{ "--p": pct }}>
+        <span>{pct}%</span>
+      </div>
+      <div>
+        <div className="ring-label">{label}</div>
+        <div className="ring-sub">{owned}/{total}</div>
+      </div>
+    </div>
+  );
+}
+
+function Timeline({ records }) {
+  const years = Array.from(new Set(records.map(r => r.year).filter(Boolean))).sort((a, b) => a - b);
+  const ownedByYear = Object.fromEntries(years.map(y => [y, records.filter(r => r.year === y && r.owned).length]));
+  const totalByYear = Object.fromEntries(years.map(y => [y, records.filter(r => r.year === y).length]));
+  const max = Math.max(1, ...years.map(y => totalByYear[y]));
+  return (
+    <section className="timeline">
+      <div className="timeline-head">
+        <span>Collection timeline</span>
+        <i>julkaisut vuosittain</i>
+      </div>
+      <div className="timeline-bars">
+        {years.map(y => (
+          <div className="yearbar" key={y} title={`${y}: ${ownedByYear[y]}/${totalByYear[y]}`}>
+            <div className="yb-track" style={{ height: Math.max(12, (totalByYear[y] / max) * 92) }}>
+              <span style={{ height: `${Math.round((ownedByYear[y] / totalByYear[y]) * 100)}%` }} />
+            </div>
+            <b>{String(y).slice(2)}</b>
+          </div>
+        ))}
+      </div>
+    </section>
   );
 }
 
@@ -264,7 +325,11 @@ function App() {
       if (r.type === "single" && !fmt[normFmt(r)]) return false;
       if (own === "own" && !r.owned) return false;
       if (own === "miss" && r.owned) return false;
-      if (q && !(r.title.toLowerCase().includes(q.toLowerCase()) || String(r.year).includes(q) || r.cat.toLowerCase().includes(q.toLowerCase()))) return false;
+      if (q) {
+        const needle = q.toLowerCase();
+        const hay = [r.title, r.year, r.cat, r.label, r.format, r.type, specialText(r)].join(" ").toLowerCase();
+        if (!hay.includes(needle)) return false;
+      }
       if (!editing && !showHidden && hiddenSet.has(r.id)) return false;
       return true;
     });
@@ -336,17 +401,16 @@ function App() {
           <div className="bar-cap">{pct}% kokoelmasta · {total - ownedCount} puuttuu</div>
         </div>
         <div className="hero-r">
-          <div className="breakdown">
-            {[["album", "Albumit"], ["single", "Sinkut"], ["special", "Erikoiset"]].map(([t, l]) => (
-              <div className="bd" key={t}>
-                <div className="bd-n">{ownedBy(t)}<i>/{counts[t]}</i></div>
-                <div className="bd-l">{l}</div>
-              </div>
-            ))}
+          <div className="breakdown rings">
+            <ProgressRing label="Albumit" owned={ownedBy("album")} total={counts.album} />
+            <ProgressRing label="Sinkut" owned={ownedBy("single")} total={counts.single} />
+            <ProgressRing label="Erikoiset" owned={ownedBy("special")} total={counts.special} />
           </div>
           <div className="quote">{quote[0]}<b>— {quote[1]}</b></div>
         </div>
       </section>
+
+      <Timeline records={records} />
 
       {/* Controls */}
       <div className="ctrl">
@@ -424,7 +488,7 @@ function App() {
         renderItems(filtered, true)
       )}
 
-      {selLive && <Detail r={selLive} auth={auth} onClose={() => setSel(null)} onToggleOwned={toggleOwned} onToggleWish={toggleWish} />}
+      {selLive && <Detail r={selLive} auth={auth} allRecords={records} onClose={() => setSel(null)} onToggleOwned={toggleOwned} onToggleWish={toggleWish} />}
       {loginOpen && <Login onClose={() => setLoginOpen(false)} onSuccess={() => { setAuth(true); setLoginOpen(false); setEditing(true); }} />}
     </div>
   );
